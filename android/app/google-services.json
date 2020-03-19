@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "663312236194",
+    "firebase_url": "https://fastswap-57631.firebaseio.com",
+    "project_id": "fastswap-57631",
+    "storage_bucket": "fastswap-57631.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:663312236194:android:a048a9ac463fc857b361fb",
+        "android_client_info": {
+          "package_name": "com.saico.fastswap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "663312236194-a2t5mtksgsh26s6rhe61stcmkk3fq64i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtRhm8OPZI1sxt9c2yK9hiJA5LZr3nHfI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "663312236194-a2t5mtksgsh26s6rhe61stcmkk3fq64i.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "663312236194-ehhcuasv6tqb5t1k6tmed3v6h1q3one3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.saico.fastswap"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
