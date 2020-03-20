@@ -24,6 +24,7 @@ class UserRepository {
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
+    print(googleAuth.accessToken);
     await _firebaseAuth.signInWithCredential(credential);
     return _firebaseAuth.currentUser();
   }

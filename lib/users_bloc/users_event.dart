@@ -55,10 +55,14 @@ class DeleteUser extends UsersEvent {
 }
 
 class UsersInfoUpdated extends UsersEvent {
+  final String uid;
   final Map<String, Object> userInfo;
 
-  const UsersInfoUpdated(this.userInfo);
+  const UsersInfoUpdated(this.uid, this.userInfo);
 
   @override
-  List<Object> get props => [userInfo];
+  List<Object> get props => [userInfo, uid];
+
+  @override
+  String toString() => 'UsersInfoUpdated { uid: $uid,  userInfo: $userInfo}';
 }

@@ -37,7 +37,7 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
     DocumentSnapshot documentSnapshot = await documentReference.get();
     UserEntity userEntity = UserEntity.fromSnapshot(documentSnapshot);
     Map<String, Object> data = userEntity.toDocument();
-    add(UsersInfoUpdated(data));
+    add(UsersInfoUpdated(event.uid, data));
   }
 
   Stream<UsersState> _mapAddUserToState(AddUser event) async* {
@@ -53,7 +53,7 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
   }
 
   Stream<UsersState> _mapUserInfoUpdatedToState(UsersInfoUpdated event) async* {
-    yield UserInfoLoaded(event.userInfo);
+    yield UserInfoLoaded(event.uid, event.userInfo);
   }
 
   @override

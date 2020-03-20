@@ -26,7 +26,7 @@ class TabSelector extends StatelessWidget {
             tab == AppTab.home ? Icons.list : Icons.show_chart,
           ),
           title: Text(
-            tab == AppTab.home ? 'Home' : 'Edit User Info',
+            tab == AppTab.home ? 'Home' : 'Account',
           ),
         );
       }).toList(),
