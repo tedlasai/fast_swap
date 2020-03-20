@@ -1,29 +1,29 @@
-part of 'authentication_bloc.dart';
+import 'package:equatable/equatable.dart';
 
-abstract class AuthenticationState extends Equatable {
-  const AuthenticationState();
+abstract class SearchState extends Equatable {
+  const SearchState(this.hasQuery, this.query);
+
+  final bool hasQuery;
+  final String query;
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [hasQuery, query];
+
+  @override
+  String toString() =>
+      'SearchState { hasQuery: $hasQuery, displayName:$query }';
 }
 
-class Uninitialized extends AuthenticationState {}
-
-class Authenticated extends AuthenticationState {
-  final String uid;
-  final String displayName;
-
-  const Authenticated(this.uid, this.displayName);
-
-  @override
-  List<Object> get props => [uid, displayName];
-
-  @override
-  String toString() => 'Authenticated { uid: $uid, displayName:$displayName }';
+class Uninitialized extends SearchState {
+  const Uninitialized() : super(false, '');
 }
 
-class Unauthenticated extends AuthenticationState {
-  final String uid;
+class HasSearchString extends SearchState {
+  const HasSearchString() : super(false, '');
 
-  const Unauthenticated(this.uid);
+  const HasSearchString.query(query) : super(true, query);
+}
+
+class NoSearchString extends SearchState {
+  const NoSearchString() : super(false, '');
 }

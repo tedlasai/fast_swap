@@ -3,6 +3,7 @@ import '../entities/entities.dart';
 
 @immutable
 class User {
+  final String displayName;
   final String email;
   final String instagram;
   final String phoneNumber;
@@ -12,14 +13,16 @@ class User {
   final String whatsapp;
 
   User(
-      {String email,
+      {String displayName,
+      String email,
       String instagram,
       String phoneNumber,
       String snapchat,
       @required String uid,
       String username,
       String whatsapp})
-      : email = email ?? "",
+      : displayName = displayName ?? "",
+        email = email ?? "",
         instagram = instagram ?? "",
         phoneNumber = phoneNumber ?? "",
         snapchat = snapchat ?? "",
@@ -28,7 +31,8 @@ class User {
         whatsapp = whatsapp ?? "";
 
   User copyWith(
-      {String email,
+      {String displayName,
+      String email,
       String instagram,
       String phoneNumber,
       String snapchat,
@@ -36,6 +40,7 @@ class User {
       String username,
       String whatsapp}) {
     return User(
+        displayName: displayName ?? this.displayName,
         email: email ?? this.email,
         instagram: instagram ?? this.instagram,
         phoneNumber: phoneNumber ?? this.phoneNumber,
@@ -47,6 +52,7 @@ class User {
 
   @override
   int get hashCode =>
+      displayName.hashCode ^
       email.hashCode ^
       instagram.hashCode ^
       phoneNumber.hashCode ^
@@ -60,6 +66,7 @@ class User {
       identical(this, other) ||
       other is User &&
           runtimeType == other.runtimeType &&
+          displayName == other.displayName &&
           email == other.email &&
           instagram == other.instagram &&
           snapchat == other.snapchat &&
@@ -70,11 +77,12 @@ class User {
 
   @override
   String toString() {
-    return 'User{email: $email, instagram: $instagram, phoneNumber: $phoneNumber, snapchat: $snapchat,   uid: $uid , username: $username, whatsapp: $whatsapp,}';
+    return 'User{displayName: $displayName, email: $email, instagram: $instagram, phoneNumber: $phoneNumber, snapchat: $snapchat,   uid: $uid , username: $username, whatsapp: $whatsapp,}';
   }
 
   UserEntity toEntity() {
     return UserEntity(
+        displayName: displayName,
         email: email,
         instagram: instagram,
         phoneNumber: phoneNumber,
@@ -86,6 +94,7 @@ class User {
 
   static User fromEntity(UserEntity entity) {
     return User(
+        displayName: entity.displayName,
         email: entity.email,
         instagram: entity.instagram,
         phoneNumber: entity.phoneNumber,

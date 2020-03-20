@@ -1,4 +1,6 @@
+import 'package:fastswap/widgets/accountAppBar_widget.dart';
 import 'package:fastswap/widgets/account_widget.dart';
+import 'package:fastswap/widgets/customSearchBar_widget.dart';
 import 'package:fastswap/widgets/home_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,26 +44,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return BlocBuilder<TabBloc, AppTab>(
       builder: (context, activeTab) {
         return Scaffold(
-            appBar: AppBar(
-              title: Text(activeTab == AppTab.home ? 'Home' : 'Account'),
-              actions: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: () {
-                    showSearch(
-                        context: context, delegate: CustomSearchDelegate());
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.exit_to_app),
-                  onPressed: () {
-                    BlocProvider.of<AuthenticationBloc>(context).add(
-                      LoggedOut(),
-                    );
-                  },
-                )
-              ],
-            ),
+            appBar: activeTab == AppTab.home
+                ? CustomSearchBar()
+                : CustomAccountAppBar(),
             body: activeTab == AppTab.home
                 ? HomeWidget(uid: uid, displayName: displayName)
                 : AccountWidget(uid: uid, displayName: displayName),

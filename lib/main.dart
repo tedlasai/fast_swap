@@ -1,3 +1,4 @@
+import 'package:fastswap/search_bloc/search.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -60,7 +61,11 @@ class App extends StatelessWidget {
                 UserGetDataBloc(usersRepository: _firebaseUsersRepository)
                   ..add(UserGetDataUninitialized()),
           ),
-          BlocProvider<TabBloc>(create: (context) => TabBloc())
+          BlocProvider<TabBloc>(create: (context) => TabBloc()),
+          BlocProvider<SearchBloc>(
+              create: (context) =>
+                  SearchBloc(usersRepository: _firebaseUsersRepository)
+                    ..add(SearchStarted()))
         ],
         child: MaterialApp(
             home: BlocListener<AuthenticationBloc, AuthenticationState>(
@@ -69,8 +74,9 @@ class App extends StatelessWidget {
               BlocProvider.of<UserGetDataBloc>(context)
                   .add(UserGetDataUninitialized());
             } else if (state is Authenticated) {
-              BlocProvider.of<UserGetDataBloc>(context)
-                  .add(UserGetDataStart(state.uid));
+              BlocProvider.of<UserGetDataBloc>(context).add(UserGetDataStart(
+                uid: state.uid,
+              ));
             }
           },
           child: BlocBuilder<AuthenticationBloc, AuthenticationState>(

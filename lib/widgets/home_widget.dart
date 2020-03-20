@@ -34,14 +34,6 @@ class _HomeWidgetState extends State<HomeWidget> {
       return Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            TextField(
-              decoration: InputDecoration(
-                  suffixIcon: IconButton(
-                      icon: Icon(Icons.remove),
-                      onPressed: () {
-                        debugPrint('222');
-                      })),
-            ),
             Text(
                 'EDIT INFO PAGE Welcome $displayName! UserID: $uid Whatsapp: $whatsapp')
           ]);

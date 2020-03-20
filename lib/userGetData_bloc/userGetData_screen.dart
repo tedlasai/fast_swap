@@ -57,6 +57,7 @@ class UserGetDataScreen extends StatelessWidget {
                 } else {
                   return UserGetDataForm(
                     uid: _uid,
+                    displayName: _displayName,
                   );
                 }
               } else if (state.isFailure) {

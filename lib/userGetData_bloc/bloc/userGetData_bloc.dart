@@ -85,7 +85,10 @@ class UserGetDataBloc extends Bloc<UserGetDataEvent, UserGetDataState> {
   Stream<UserGetDataState> _mapUserGetDataSubmitted(
       UserGetDataSubmitted event) async* {
     try {
-      User user = User(uid: event.uid, username: event.username);
+      User user = User(
+          uid: event.uid,
+          username: event.username,
+          displayName: event.displayName);
       _usersRepository.setNewUser(user);
       yield UserGetDataState.success();
     } catch (_) {

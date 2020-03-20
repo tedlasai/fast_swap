@@ -1,59 +1,54 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:fastswap/search_bloc/search.dart';
 import 'package:meta/meta.dart';
 import 'package:fastswap/user_repository.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fastswap/usersLib/users_repository.dart';
 
-part 'authentication_event.dart';
+class SearchBloc extends Bloc<SearchEvent, SearchState> {
+  final UsersRepository _usersRepository;
 
-part 'authentication_state.dart';
-
-class AuthenticationBloc
-    extends Bloc<AuthenticationEvent, AuthenticationState> {
-  final UserRepository _userRepository;
-
-  AuthenticationBloc({@required UserRepository userRepository})
-      : assert(userRepository != null),
-        _userRepository = userRepository;
+  SearchBloc({@required UsersRepository usersRepository})
+      : assert(usersRepository != null),
+        _usersRepository = usersRepository;
 
   @override
-  AuthenticationState get initialState => Uninitialized();
+  SearchState get initialState => Uninitialized();
 
   @override
-  Stream<AuthenticationState> mapEventToState(
-    AuthenticationEvent event,
+  Stream<SearchState> mapEventToState(
+    SearchEvent event,
   ) async* {
-    if (event is AppStarted) {
-      yield* _mapAppStartedToState();
-    } else if (event is LoggedIn) {
-      yield* _mapLoggedInToState();
-    } else if (event is LoggedOut) {
-      yield* _mapLoggedOutToState();
+    if (event is SearchStarted) {
+      yield* _mapSearchStartedToState();
+    } else if (event is SearchUpdated) {
+      yield* _mapSearchUpdatedToState(event);
+    } else if (event is SearchClear) {
+      yield* _mapSearchClearToState();
     }
   }
 
-  Stream<AuthenticationState> _mapAppStartedToState() async* {
-    try {
-      final isSignedIn = await _userRepository.isSignedIn();
-      final name = await _userRepository.getUserUID();
-      final uid = await _userRepository.getUserDisplayName();
-      if (isSignedIn) {
-        yield Authenticated(name, uid);
-      } else {
-        yield Unauthenticated(uid);
-      }
-    } catch (_) {
-      yield Unauthenticated("");
+  Stream<SearchState> _mapSearchStartedToState() async* {
+    yield Uninitialized();
+  }
+
+  Stream<SearchState> _mapSearchUpdatedToState(SearchUpdated event) async* {
+    print("IN UPDATE SERACH SBLOC");
+    print(event.query);
+    QuerySnapshot usersMatchedSnapshot =
+        await _usersRepository.findUsers(event.query);
+    print(usersMatchedSnapshot.documents);
+
+    if (event.query != "") {
+      yield HasSearchString.query(event.query);
+    } else {
+      yield NoSearchString();
     }
   }
 
-  Stream<AuthenticationState> _mapLoggedInToState() async* {
-    yield Authenticated(await _userRepository.getUserUID(),
-        await _userRepository.getUserDisplayName());
-  }
-
-  Stream<AuthenticationState> _mapLoggedOutToState() async* {
-    yield Unauthenticated(await _userRepository.getUserUID());
-    _userRepository.signOut();
+  Stream<SearchState> _mapSearchClearToState() async* {
+    yield NoSearchString();
   }
 }

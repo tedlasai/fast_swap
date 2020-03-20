@@ -12,6 +12,8 @@ abstract class UsersRepository {
 
   Future<void> setNewUser(User user);
 
+  Future<QuerySnapshot> findUsers(String query);
+
   Future<void> deleteUser(User user);
 
   Future<DocumentReference> pullUser(User user);

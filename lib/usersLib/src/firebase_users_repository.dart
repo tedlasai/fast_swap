@@ -19,6 +19,20 @@ class FirebaseUsersRepository implements UsersRepository {
     return userCollection.add(User.toEntity().toDocument());
   }
 
+  Future<QuerySnapshot> findUsers(String query) {
+    try {
+      return userCollection
+          .where("usernameSearchTerms", arrayContains: query)
+          .limit(10)
+          .getDocuments();
+      /*return userCollection
+          .where("username", isEqualTo: "tedlasai")
+          .getDocuments();*/
+    } catch (_) {
+      print(_);
+    }
+  }
+
   @override
   Future<void> setNewUser(User User) {
     try {

@@ -11,10 +11,12 @@ import '../screens/splash_screen.dart';
 
 class UserGetDataForm extends StatefulWidget {
   final String _uid;
+  final String _displayName;
 
-  UserGetDataForm({Key key, @required String uid})
+  UserGetDataForm({Key key, @required String uid, @required String displayName})
       : assert(uid != null),
         _uid = uid,
+        _displayName = displayName,
         super(key: key);
 
   State<UserGetDataForm> createState() => _UserGetDataFormState();
@@ -22,6 +24,7 @@ class UserGetDataForm extends StatefulWidget {
 
 class _UserGetDataFormState extends State<UserGetDataForm> {
   String uid;
+  String displayName;
   final TextEditingController _usernameController = TextEditingController();
 
   //final TextEditingController _passwordController = TextEditingController();
@@ -40,6 +43,7 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
   void initState() {
     super.initState();
     uid = widget._uid;
+    displayName = widget._displayName;
     _UserGetDataBloc = BlocProvider.of<UserGetDataBloc>(context);
     _usernameController.addListener(_onUsernameChanged);
   }
@@ -128,7 +132,10 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
 
   void _onFormSubmitted() {
     _UserGetDataBloc.add(
-      UserGetDataSubmitted(username: _usernameController.text, uid: uid),
+      UserGetDataSubmitted(
+          username: _usernameController.text,
+          uid: uid,
+          displayName: displayName),
     );
   }
 }

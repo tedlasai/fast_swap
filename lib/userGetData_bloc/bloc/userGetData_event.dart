@@ -13,10 +13,15 @@ class UserGetDataUninitialized extends UserGetDataEvent {}
 class UserGetDataStart extends UserGetDataEvent {
   final String uid;
 
-  const UserGetDataStart(this.uid);
+  const UserGetDataStart({
+    @required this.uid,
+  });
 
   @override
-  String toString() => 'UserGetDataStart { uid :$uid }';
+  String toString() => 'UserGetDataStart { uid :$uid}';
+
+  @override
+  List<Object> get props => [uid];
 }
 
 class UserGetDataUsernameChanged extends UserGetDataEvent {
@@ -33,16 +38,20 @@ class UserGetDataUsernameChanged extends UserGetDataEvent {
 
 class UserGetDataSubmitted extends UserGetDataEvent {
   final String username;
+  final String displayName;
   final String uid;
 
-  const UserGetDataSubmitted({@required this.username, @required this.uid});
+  const UserGetDataSubmitted(
+      {@required this.username,
+      @required this.uid,
+      @required this.displayName});
 
   @override
-  List<Object> get props => [username, uid];
+  List<Object> get props => [username, uid, displayName];
 
   @override
   String toString() {
-    return 'Submitted { username: $username, uid: $uid}';
+    return 'Submitted { displayName: $displayName, username: $username, uid: $uid}';
   }
 }
 

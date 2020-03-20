@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:fastswap/tab/app_tab.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:fastswap/user_repository.dart';
+import 'package:fastswap/tab/bloc/tab.dart';
 
 part 'authentication_event.dart';
 
