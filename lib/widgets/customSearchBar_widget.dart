@@ -78,7 +78,12 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
 
   _clearQueryController() {
     BlocProvider.of<SearchBloc>(context).add(SearchClear());
-    queryController.text = "";
+    //queryController.text = "";
+    //filterNod
+    queryController.clear();
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => queryController.clear());
+    //FocusScope.of(context).requestFocus(FocusNode());
   }
 
   _printLatestValue() {

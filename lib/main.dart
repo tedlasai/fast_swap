@@ -67,33 +67,41 @@ class App extends StatelessWidget {
                   SearchBloc(usersRepository: _firebaseUsersRepository)
                     ..add(SearchStarted()))
         ],
-        child: MaterialApp(
-            home: BlocListener<AuthenticationBloc, AuthenticationState>(
-          listener: (context, state) {
-            if (state is Unauthenticated) {
-              BlocProvider.of<UserGetDataBloc>(context)
-                  .add(UserGetDataUninitialized());
-            } else if (state is Authenticated) {
-              BlocProvider.of<UserGetDataBloc>(context).add(UserGetDataStart(
-                uid: state.uid,
-              ));
-            }
-          },
-          child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-            builder: (context, state) {
-              if (state is Unauthenticated) {
-                return LoginScreen(userRepository: _userRepository);
+        child: GestureDetector(
+            onTap: () {
+              FocusScopeNode currentFocus = FocusScope.of(context);
+              if (!currentFocus.hasPrimaryFocus) {
+                currentFocus.unfocus();
               }
-              if (state is Authenticated) {
-                return UserGetDataScreen(
-                  uid: state.uid,
-                  displayName: state.displayName,
-                  firebaseUsersRepository: _firebaseUsersRepository,
-                );
-              }
-              return SplashScreen();
             },
-          ),
-        )));
+            child: MaterialApp(
+                home: BlocListener<AuthenticationBloc, AuthenticationState>(
+              listener: (context, state) {
+                if (state is Unauthenticated) {
+                  BlocProvider.of<UserGetDataBloc>(context)
+                      .add(UserGetDataUninitialized());
+                } else if (state is Authenticated) {
+                  BlocProvider.of<UserGetDataBloc>(context)
+                      .add(UserGetDataStart(
+                    uid: state.uid,
+                  ));
+                }
+              },
+              child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                builder: (context, state) {
+                  if (state is Unauthenticated) {
+                    return LoginScreen(userRepository: _userRepository);
+                  }
+                  if (state is Authenticated) {
+                    return UserGetDataScreen(
+                      uid: state.uid,
+                      displayName: state.displayName,
+                      firebaseUsersRepository: _firebaseUsersRepository,
+                    );
+                  }
+                  return SplashScreen();
+                },
+              ),
+            ))));
   }
 }
