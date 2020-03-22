@@ -1,9 +1,12 @@
 // Copyright 2018 The Flutter Architecture Sample Authors. All rights reserved.
 // Use of this source code is governed by the MIT license that can be found
 // in the LICENSE file.
+import 'package:fastswap/usersLib/src/models/user.dart';
 import 'package:meta/meta.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
+
+import '../helpers.dart';
 
 class UserEntity extends Equatable {
   final String displayName;
@@ -13,9 +16,10 @@ class UserEntity extends Equatable {
   final String snapchat;
   final String uid;
   final String username;
+  final List<String> usernameSearchTerms;
   final String whatsapp;
 
-  const UserEntity(
+  UserEntity(
       {String displayName,
       String email,
       String instagram,
@@ -23,6 +27,7 @@ class UserEntity extends Equatable {
       String snapchat,
       @required String uid,
       String username,
+      List<String> usernameSearchTerms,
       String whatsapp})
       : displayName = displayName ?? "",
         email = email ?? "",
@@ -31,6 +36,7 @@ class UserEntity extends Equatable {
         snapchat = snapchat ?? "",
         uid = uid,
         username = username ?? "",
+        usernameSearchTerms = usernameSearchTerms ?? setSearchParam(username),
         whatsapp = whatsapp ?? "";
 
   Map<String, Object> toJson() {
@@ -42,6 +48,7 @@ class UserEntity extends Equatable {
       "snapchat": snapchat,
       "uid": uid,
       "username": username,
+      "usernameSearchTerms": usernameSearchTerms,
       "whatsapp": whatsapp,
     };
   }
@@ -55,12 +62,13 @@ class UserEntity extends Equatable {
         snapchat,
         uid,
         username,
+        usernameSearchTerms,
         whatsapp
       ];
 
   @override
   String toString() {
-    return 'UserEntity {  displayName: $displayName email: $email, instagram: $instagram, phoneNumber: $phoneNumber, snapchat: $snapchat,   uid: $uid , username: $username, whatsapp: $whatsapp,}';
+    return 'UserEntity {  displayName: $displayName email: $email, instagram: $instagram, phoneNumber: $phoneNumber, snapchat: $snapchat,   uid: $uid , username: $username, usernameSearchTerms: $usernameSearchTerms, whatsapp: $whatsapp,}';
   }
 
   static UserEntity fromJson(Map<String, Object> json) {
@@ -72,11 +80,15 @@ class UserEntity extends Equatable {
       snapchat: json["snapchat"] as String,
       uid: json["uid"] as String,
       username: json["username"] as String,
+      usernameSearchTerms: json["usernameSearchTerms"] as List<String>,
       whatsapp: json["whatsapp"] as String,
     );
   }
 
   static UserEntity fromSnapshot(DocumentSnapshot snap) {
+    List<dynamic> usernameSearchTerms = snap.data['usernameSearchTerms'];
+    List<String> usernameSearchTermsString =
+        new List<String>.from(usernameSearchTerms);
     return UserEntity(
       displayName: snap.data["displayName"],
       email: snap.data['email'],
@@ -85,6 +97,7 @@ class UserEntity extends Equatable {
       snapchat: snap.data['snapchat'],
       uid: snap.documentID,
       username: snap.data['username'],
+      usernameSearchTerms: usernameSearchTermsString,
       whatsapp: snap.data['whatsapp'],
     );
   }
@@ -97,6 +110,7 @@ class UserEntity extends Equatable {
       "phoneNumber": phoneNumber,
       "snapchat": snapchat,
       "username": username,
+      "usernameSearchTerms": usernameSearchTerms,
       "whatsapp": whatsapp,
     };
   }

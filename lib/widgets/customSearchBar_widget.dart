@@ -51,6 +51,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
                     Expanded(
                         flex: 1,
                         child: TextFormField(
+                            style: new TextStyle(color: Colors.white),
                             controller: queryController,
                             decoration: InputDecoration(
                               border: InputBorder.none,
@@ -71,16 +72,14 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
   }
 
   _checkIfTextEmpty() {
-    print("HI" + queryController.text);
     textEmpty = queryController.text == "";
-    print(textEmpty);
   }
 
   _clearQueryController() {
     BlocProvider.of<SearchBloc>(context).add(SearchClear());
     //queryController.text = "";
     //filterNod
-    queryController.clear();
+    FocusScope.of(context).requestFocus(FocusNode()); //hide keyboard
     WidgetsBinding.instance
         .addPostFrameCallback((_) => queryController.clear());
     //FocusScope.of(context).requestFocus(FocusNode());
@@ -89,6 +88,5 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
   _printLatestValue() {
     BlocProvider.of<SearchBloc>(context)
         .add(SearchUpdated(query: queryController.text));
-    print("Second text field: ${queryController.text}");
   }
 }

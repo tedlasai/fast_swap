@@ -1,5 +1,6 @@
 import 'package:meta/meta.dart';
 import '../entities/entities.dart';
+import '../helpers.dart';
 
 @immutable
 class User {
@@ -10,6 +11,7 @@ class User {
   final String snapchat;
   final String uid;
   final String username;
+  final List<String> usernameSearchTerms;
   final String whatsapp;
 
   User(
@@ -20,6 +22,7 @@ class User {
       String snapchat,
       @required String uid,
       String username,
+      List<String> usernameSearchTerms,
       String whatsapp})
       : displayName = displayName ?? "",
         email = email ?? "",
@@ -28,6 +31,7 @@ class User {
         snapchat = snapchat ?? "",
         uid = uid,
         username = username ?? "",
+        usernameSearchTerms = usernameSearchTerms ?? setSearchParam(username),
         whatsapp = whatsapp ?? "";
 
   User copyWith(
@@ -38,6 +42,7 @@ class User {
       String snapchat,
       String uid,
       String username,
+      List<String> usernameSearchTerms,
       String whatsapp}) {
     return User(
         displayName: displayName ?? this.displayName,
@@ -47,6 +52,7 @@ class User {
         snapchat: snapchat ?? this.snapchat,
         uid: uid ?? this.uid,
         username: username ?? this.username,
+        usernameSearchTerms: usernameSearchTerms ?? this.usernameSearchTerms,
         whatsapp: whatsapp ?? this.whatsapp);
   }
 
@@ -59,6 +65,7 @@ class User {
       snapchat.hashCode ^
       uid.hashCode ^
       username.hashCode ^
+      usernameSearchTerms.hashCode ^
       whatsapp.hashCode;
 
   @override
@@ -77,7 +84,7 @@ class User {
 
   @override
   String toString() {
-    return 'User{displayName: $displayName, email: $email, instagram: $instagram, phoneNumber: $phoneNumber, snapchat: $snapchat,   uid: $uid , username: $username, whatsapp: $whatsapp,}';
+    return 'User{displayName: $displayName, email: $email, instagram: $instagram, phoneNumber: $phoneNumber, snapchat: $snapchat,   uid: $uid , username: $username, usernameSearchTerms: $usernameSearchTerms, whatsapp: $whatsapp,}';
   }
 
   UserEntity toEntity() {
@@ -89,6 +96,7 @@ class User {
         snapchat: snapchat,
         uid: uid,
         username: username,
+        usernameSearchTerms: usernameSearchTerms,
         whatsapp: whatsapp);
   }
 
@@ -101,6 +109,7 @@ class User {
         snapchat: entity.snapchat,
         uid: entity.uid,
         username: entity.username,
+        usernameSearchTerms: entity.usernameSearchTerms,
         whatsapp: entity.whatsapp);
   }
 }

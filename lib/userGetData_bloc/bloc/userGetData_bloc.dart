@@ -56,8 +56,10 @@ class UserGetDataBloc extends Bloc<UserGetDataEvent, UserGetDataState> {
       DocumentReference documentReference =
           await _usersRepository.pullUser(user);
       DocumentSnapshot documentSnapshot = await documentReference.get();
+
       if (documentSnapshot.exists) {
         UserEntity userEntity = UserEntity.fromSnapshot(documentSnapshot);
+
         Map<String, Object> data = userEntity.toDocument();
         if (data["username"] != null && data["username"] != "") {
           yield UserGetDataState.success();

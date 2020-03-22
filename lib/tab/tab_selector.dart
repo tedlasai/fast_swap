@@ -15,8 +15,6 @@ class TabSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("IN TAB SELECTOR");
-    print(AppTab.values);
     return BottomNavigationBar(
       currentIndex: AppTab.values.indexOf(activeTab),
       onTap: (index) => onTabSelected(AppTab.values[index]),

@@ -35,12 +35,9 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   }
 
   Stream<SearchState> _mapSearchUpdatedToState(SearchUpdated event) async* {
-    print("IN UPDATE SERACH SBLOC");
-    print(event.query);
     QuerySnapshot usersMatchedSnapshot =
         await _usersRepository.findUsers(event.query);
     print(usersMatchedSnapshot.documents);
-
     if (event.query != "") {
       yield HasSearchString.query(event.query);
     } else {
