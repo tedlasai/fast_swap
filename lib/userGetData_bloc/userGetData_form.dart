@@ -26,13 +26,13 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
   String uid;
   String displayName;
   final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _whatsappController = TextEditingController();
+  final TextEditingController _twitterController = TextEditingController();
 
   //final TextEditingController _passwordController = TextEditingController();
 
   bool get isPopulated =>
       _usernameController.text.isNotEmpty &&
-      _whatsappController.text.isNotEmpty;
+          _twitterController.text.isNotEmpty;
 
   bool isSubmitButtonEnabled(UserGetDataState state) {
     return state.isFormValid && isPopulated && !state.isSubmitting;
@@ -49,7 +49,7 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
     displayName = widget._displayName;
     _UserGetDataBloc = BlocProvider.of<UserGetDataBloc>(context);
     _usernameController.addListener(_onDataChanged);
-    _whatsappController.addListener(_onDataChanged);
+    _twitterController.addListener(_onDataChanged);
   }
 
   @override
@@ -100,17 +100,17 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
                     },
                   ),
                   TextFormField(
-                    controller: _whatsappController,
+                    controller: _twitterController,
                     decoration: InputDecoration(
                       icon: Icon(Icons.person),
-                      labelText: 'Whatsapp',
+                      labelText: 'Twitter',
                     ),
                     keyboardType: TextInputType.text,
                     autovalidate: true,
                     autocorrect: false,
                     validator: (_) {
-                      return state.isWhatsappValid != "VALID"
-                          ? 'Invalid Whatsapp Number'
+                      return state.isTwitterValid != "VALID"
+                          ? 'Invalid Twitter Number'
                           : null;
                     },
                   ),
@@ -139,7 +139,7 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
   @override
   void dispose() {
     _usernameController.dispose();
-    _whatsappController.dispose();
+    _twitterController.dispose();
     //_passwordController.dispose();
     super.dispose();
   }
@@ -148,7 +148,7 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
     _UserGetDataBloc.add(
       UserGetDataChanged(
           username: _usernameController.text,
-          whatsapp: _whatsappController.text),
+          twitter: _twitterController.text),
     );
   }
 
@@ -156,7 +156,7 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
     _UserGetDataBloc.add(
       UserGetDataSubmitted(
           username: _usernameController.text,
-          whatsapp: _whatsappController.text,
+          twitter: _twitterController.text,
           uid: uid,
           displayName: displayName),
     );

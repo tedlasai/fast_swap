@@ -34,4 +34,6 @@ class HasSearchStringAndResults extends SearchState {
 
 class NoSearchStringAndNoResults extends SearchState {
   const NoSearchStringAndNoResults() : super(false, '');
+
+  const NoSearchStringAndNoResults.query(query) : super(false, query);
 }

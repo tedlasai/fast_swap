@@ -26,36 +26,35 @@ class UserGetDataStart extends UserGetDataEvent {
 
 class UserGetDataChanged extends UserGetDataEvent {
   final String username;
-  final String whatsapp;
+  final String twitter;
 
-  const UserGetDataChanged({this.username, this.whatsapp});
+  const UserGetDataChanged({this.username, this.twitter});
 
   @override
-  List<Object> get props => [username, whatsapp];
+  List<Object> get props => [username, twitter];
 
   @override
   String toString() =>
-      'DataChanged { username :$username, whatsapp: $whatsapp }';
+      'DataChanged { username :$username, twitter: $twitter }';
 }
 
 class UserGetDataSubmitted extends UserGetDataEvent {
   final String username;
-  final String whatsapp;
+  final String twitter;
   final String displayName;
   final String uid;
 
-  const UserGetDataSubmitted(
-      {@required this.username,
-      @required this.uid,
-      @required this.displayName,
-      @required this.whatsapp});
+  const UserGetDataSubmitted({@required this.username,
+    @required this.uid,
+    @required this.displayName,
+    @required this.twitter});
 
   @override
-  List<Object> get props => [username, whatsapp, uid, displayName];
+  List<Object> get props => [username, twitter, uid, displayName];
 
   @override
   String toString() {
-    return 'Submitted { displayName: $displayName, username: $username, uid: $uid, whatsapp: $whatsapp}';
+    return 'Submitted { displayName: $displayName, username: $username, uid: $uid, twitter: $twitter}';
   }
 }
 

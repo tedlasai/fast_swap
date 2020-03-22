@@ -81,19 +81,17 @@ class UserGetDataBloc extends Bloc<UserGetDataEvent, UserGetDataState> {
       UserGetDataChanged event) async* {
     yield state.update(
       isUsernameValid: Validators.isValidUsername(event.username),
-      isWhatsappValid: Validators.isValidWhatsapp(event.whatsapp),
+      isTwitterValid: Validators.isValidTwitter(event.twitter),
     );
   }
 
   Stream<UserGetDataState> _mapUserGetDataSubmitted(
       UserGetDataSubmitted event) async* {
-    print(event.username);
-    print(event.username);
     try {
       User user = User(
           uid: event.uid,
           username: event.username,
-          whatsapp: event.whatsapp,
+          twitter: event.twitter,
           displayName: event.displayName);
       _usersRepository.setNewUser(user);
       yield UserGetDataState.success();

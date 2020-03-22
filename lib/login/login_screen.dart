@@ -12,6 +12,9 @@ class LoginScreen extends StatelessWidget {
         super(key: key);
 
   @override
+  void initState() {}
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Login')),

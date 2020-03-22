@@ -34,7 +34,7 @@ class Validators {
       return "VALID";
   }
 
-  static isValidWhatsapp(String username) {
+  static isValidTwitter(String username) {
     if (!_usernameStartUnderscoreCharRegExp.hasMatch(username)) {
       return "Username can't start with special character.";
     } else if (_usernameEndingChar(username)) {

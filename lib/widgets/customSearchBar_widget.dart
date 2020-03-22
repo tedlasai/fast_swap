@@ -23,8 +23,11 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
 
   @override
   void initState() {
+    print("in init state");
     super.initState();
     textEmpty = true;
+    print("AFTER");
+
     queryController.addListener(_updateQuery);
   }
 
@@ -32,6 +35,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
   void dispose() {
     // Clean up the controller when the widget is removed from the
     // widget tree.
+    print("in query dispose");
     queryController.dispose();
     super.dispose();
   }
@@ -39,6 +43,12 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SearchBloc, SearchState>(builder: (context, state) {
+      //if query stored and text field is empty then store query back into textfield
+      if (queryController.text == "" && state.query != "") {
+        queryController.text = state.query;
+        queryController.selection = TextSelection.fromPosition(TextPosition(
+            offset: queryController.text.length)); //set cursor position
+      }
       return AppBar(
           title: Container(
               margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
@@ -72,13 +82,14 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
   }
 
   _updateQuery() {
-    print("TWICE");
+    print("QUERY UPDATED");
     textEmpty = queryController.text == "";
     BlocProvider.of<SearchBloc>(context)
         .add(SearchUpdated(query: queryController.text));
   }
 
   _clearQueryController() {
+    print("IN QUERY CONTROL CLEAR");
     BlocProvider.of<SearchBloc>(context).add(SearchClear());
     //queryController.text = "";
     //filterNod

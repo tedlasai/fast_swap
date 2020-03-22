@@ -36,7 +36,7 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
     DocumentReference documentReference = await _usersRepository.pullUser(user);
     DocumentSnapshot documentSnapshot = await documentReference.get();
     UserEntity userEntity = UserEntity.fromSnapshot(documentSnapshot);
-    Map<String, Object> data = userEntity.toDocument();
+    User data = User.fromEntity(userEntity);
     add(UsersInfoUpdated(event.uid, data));
   }
 

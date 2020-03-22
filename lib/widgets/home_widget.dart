@@ -1,3 +1,4 @@
+import 'package:fastswap/displayUserData_bloc/displayUserData.dart';
 import 'package:fastswap/search_bloc/search.dart';
 import 'package:fastswap/usersLib/src/models/user.dart';
 import 'package:fastswap/users_bloc/users.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:flutter_conditional_rendering/conditional_switch.dart';
+import 'package:fastswap/screens/displayUserData_screen.dart';
 
 class HomeWidget extends StatefulWidget {
   final String _uid;
@@ -23,8 +25,9 @@ class HomeWidget extends StatefulWidget {
 class _HomeWidgetState extends State<HomeWidget> {
   String uid;
   String displayName;
-  String whatsapp;
+  String twitter;
   List<User> usersMatched;
+  User currentUser;
   String searchStateDecision;
 
   @override
@@ -33,6 +36,8 @@ class _HomeWidgetState extends State<HomeWidget> {
     uid = widget._uid;
     displayName = widget._displayName;
     usersMatched = [];
+    currentUser = null;
+    twitter = "";
     searchStateDecision = "EMPTY";
   }
 
@@ -53,10 +58,11 @@ class _HomeWidgetState extends State<HomeWidget> {
         } else {
           searchStateDecision = "HAS RESULTS";
         }
-        print("SEARCH STATE DECISION");
-        print(searchStateDecision);
+
         if (state is UserInfoLoaded) {
           print(state.userInfo);
+          currentUser = state.userInfo;
+          twitter = currentUser.twitter;
         }
         return Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -67,7 +73,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                 valueBuilder: (BuildContext context) => searchStateDecision,
                 caseBuilders: {
                   'EMPTY': (BuildContext context) => Text(
-                      'EDIT INFO PAGE Welcome $displayName! UserID: $uid Whatsapp: $whatsapp.'),
+                      'EDIT INFO PAGE Welcome $displayName! UserID: $uid Twitter: $twitter'),
                   'NO MATCHES': (BuildContext context) =>
                       Text('There are no matches'),
                 },
@@ -76,34 +82,36 @@ class _HomeWidgetState extends State<HomeWidget> {
                     padding: EdgeInsets.all(10.0),
                     itemCount: usersMatched.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return Card(
-                        child: Padding(
-                          padding: EdgeInsets.all(10.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                usersMatched[index].displayName,
-                                style: TextStyle(
-                                  fontSize: 16.0,
-                                  color: Colors.black,
-                                ),
+                      return GestureDetector(
+                          onTap: () => _onCardClicked(index),
+                          child: Card(
+                            child: Padding(
+                              padding: EdgeInsets.all(10.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    usersMatched[index].displayName,
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 5.0,
+                                  ),
+                                  Text(
+                                    usersMatched[index].username,
+                                    style: TextStyle(
+                                      fontSize: 14.0,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              SizedBox(
-                                height: 5.0,
-                              ),
-                              Text(
-                                usersMatched[index].username,
-                                style: TextStyle(
-                                  fontSize: 14.0,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
+                            ),
+                          ));
                     },
                   ),
                 ),
@@ -111,5 +119,11 @@ class _HomeWidgetState extends State<HomeWidget> {
             ]);
       });
     });
+  }
+
+  _onCardClicked(int index) {
+    //print("CARD CLICKED $index");
+    BlocProvider.of<DisplayUserDataBloc>(context)
+        .add(DisplayUserDataUpdated(data: usersMatched[index]));
   }
 }

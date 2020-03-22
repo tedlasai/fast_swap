@@ -18,7 +18,7 @@ class UserEntity extends Equatable {
   final String username;
   final String usernameLowercase;
   final List<String> usernameSearchTerms;
-  final String whatsapp;
+  final String twitter;
 
   UserEntity(
       {String displayName,
@@ -30,7 +30,7 @@ class UserEntity extends Equatable {
       String username,
       String usernameLowercase,
       List<String> usernameSearchTerms,
-      String whatsapp})
+      String twitter})
       : displayName = displayName ?? "",
         email = email ?? "",
         instagram = instagram ?? "",
@@ -40,7 +40,7 @@ class UserEntity extends Equatable {
         username = username ?? "",
         usernameLowercase = toLower(username),
         usernameSearchTerms = setSearchParam(usernameLowercase),
-        whatsapp = whatsapp ?? "";
+        twitter = twitter ?? "";
 
   Map<String, Object> toJson() {
     return {
@@ -53,7 +53,7 @@ class UserEntity extends Equatable {
       "username": username,
       "usernameLowercase": usernameLowercase,
       "usernameSearchTerms": usernameSearchTerms,
-      "whatsapp": whatsapp,
+      "twitter": twitter,
     };
   }
 
@@ -68,12 +68,12 @@ class UserEntity extends Equatable {
         username,
         usernameLowercase,
         usernameSearchTerms,
-        whatsapp
+        twitter
       ];
 
   @override
   String toString() {
-    return 'UserEntity {  displayName: $displayName email: $email, instagram: $instagram, phoneNumber: $phoneNumber, snapchat: $snapchat,   uid: $uid , username: $username, usernameLowercase: $usernameLowercase, usernameSearchTerms: $usernameSearchTerms, whatsapp: $whatsapp,}';
+    return 'UserEntity {  displayName: $displayName email: $email, instagram: $instagram, phoneNumber: $phoneNumber, snapchat: $snapchat,   uid: $uid , username: $username, usernameLowercase: $usernameLowercase, usernameSearchTerms: $usernameSearchTerms, twitter: $twitter,}';
   }
 
   static UserEntity fromJson(Map<String, Object> json) {
@@ -87,7 +87,7 @@ class UserEntity extends Equatable {
       username: json["username"] as String,
       usernameLowercase: json["usernameLowercase"] as String,
       usernameSearchTerms: json["usernameSearchTerms"] as List<String>,
-      whatsapp: json["whatsapp"] as String,
+      twitter: json["twitter"] as String,
     );
   }
 
@@ -105,7 +105,7 @@ class UserEntity extends Equatable {
       username: snap.data['username'],
       usernameLowercase: snap.data['usernameLowercase'],
       usernameSearchTerms: usernameSearchTermsString,
-      whatsapp: snap.data['whatsapp'],
+      twitter: snap.data['twitter'],
     );
   }
 
@@ -119,7 +119,7 @@ class UserEntity extends Equatable {
       "username": username,
       "usernameLowercase": usernameLowercase,
       "usernameSearchTerms": usernameSearchTerms,
-      "whatsapp": whatsapp,
+      "twitter": twitter,
     };
   }
 }

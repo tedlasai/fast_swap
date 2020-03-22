@@ -1,3 +1,4 @@
+import 'package:fastswap/displayUserData_bloc/displayUserData.dart';
 import 'package:fastswap/widgets/accountAppBar_widget.dart';
 import 'package:fastswap/widgets/account_widget.dart';
 import 'package:fastswap/widgets/customSearchBar_widget.dart';
@@ -12,6 +13,8 @@ import 'package:fastswap/userGetData_bloc/bloc/bloc.dart';
 import 'package:fastswap/usersLib/users_repository.dart';
 import 'package:fastswap/users_bloc/users.dart';
 import 'package:fastswap/widgets/customSearchDelegate_widget.dart';
+
+import 'displayUserData_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final String _uid;
@@ -41,21 +44,28 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TabBloc, AppTab>(
-      builder: (context, activeTab) {
-        return Scaffold(
-            appBar: activeTab == AppTab.home
-                ? CustomSearchBar()
-                : CustomAccountAppBar(),
-            body: activeTab == AppTab.home
-                ? HomeWidget(uid: uid, displayName: displayName)
-                : AccountWidget(uid: uid, displayName: displayName),
-            bottomNavigationBar: TabSelector(
-              activeTab: activeTab,
-              onTabSelected: (tab) =>
-                  BlocProvider.of<TabBloc>(context).add(UpdateTab(tab)),
-            ));
-      },
-    );
+    return BlocBuilder<DisplayUserDataBloc, DisplayUserDataState>(
+        builder: (displayUserContext, displayUserDatastate) {
+      if (displayUserDatastate is NoUserData) {
+        return BlocBuilder<TabBloc, AppTab>(
+          builder: (context, activeTab) {
+            return Scaffold(
+                appBar: activeTab == AppTab.home
+                    ? CustomSearchBar()
+                    : CustomAccountAppBar(),
+                body: activeTab == AppTab.home
+                    ? HomeWidget(uid: uid, displayName: displayName)
+                    : AccountWidget(uid: uid, displayName: displayName),
+                bottomNavigationBar: TabSelector(
+                  activeTab: activeTab,
+                  onTabSelected: (tab) =>
+                      BlocProvider.of<TabBloc>(context).add(UpdateTab(tab)),
+                ));
+          },
+        );
+      } else {
+        return DisplayUserDataScreen();
+      }
+    });
   }
 }

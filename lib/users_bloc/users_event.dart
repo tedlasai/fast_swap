@@ -56,7 +56,7 @@ class DeleteUser extends UsersEvent {
 
 class UsersInfoUpdated extends UsersEvent {
   final String uid;
-  final Map<String, Object> userInfo;
+  final User userInfo;
 
   const UsersInfoUpdated(this.uid, this.userInfo);
 

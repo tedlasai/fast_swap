@@ -12,7 +12,7 @@ class UsersLoading extends UsersState {}
 
 class UserInfoLoaded extends UsersState {
   final String uid;
-  final Map<String, Object> userInfo;
+  final User userInfo;
 
   const UserInfoLoaded(this.uid, this.userInfo);
 

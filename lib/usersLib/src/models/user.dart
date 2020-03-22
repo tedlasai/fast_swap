@@ -13,7 +13,7 @@ class User {
   final String username;
   final String usernameLowercase;
   final List<String> usernameSearchTerms;
-  final String whatsapp;
+  final String twitter;
 
   User(
       {String displayName,
@@ -25,7 +25,7 @@ class User {
       String username,
       List<String> usernameSearchTerms,
       String usernameLowercase,
-      String whatsapp})
+      String twitter})
       : displayName = displayName ?? "",
         email = email ?? "",
         instagram = instagram ?? "",
@@ -35,7 +35,7 @@ class User {
         username = username ?? "",
         usernameLowercase = toLower(username),
         usernameSearchTerms = setSearchParam(usernameLowercase),
-        whatsapp = whatsapp ?? "";
+        twitter = twitter ?? "";
 
   User copyWith(
       {String displayName,
@@ -47,7 +47,7 @@ class User {
       String username,
       String usernameLowercase,
       List<String> usernameSearchTerms,
-      String whatsapp}) {
+      String twitter}) {
     return User(
         displayName: displayName ?? this.displayName,
         email: email ?? this.email,
@@ -58,7 +58,7 @@ class User {
         username: username ?? this.username,
         usernameLowercase: usernameLowercase ?? this.usernameLowercase,
         usernameSearchTerms: usernameSearchTerms ?? this.usernameSearchTerms,
-        whatsapp: whatsapp ?? this.whatsapp);
+        twitter: twitter ?? this.twitter);
   }
 
   @override
@@ -72,7 +72,7 @@ class User {
       username.hashCode ^
       usernameLowercase.hashCode ^
       usernameSearchTerms.hashCode ^
-      whatsapp.hashCode;
+      twitter.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -86,11 +86,11 @@ class User {
           phoneNumber == other.phoneNumber &&
           uid == other.uid &&
           username == other.username &&
-          whatsapp == other.whatsapp;
+          twitter == other.twitter;
 
   @override
   String toString() {
-    return 'User{displayName: $displayName, email: $email, instagram: $instagram, phoneNumber: $phoneNumber, snapchat: $snapchat,   uid: $uid , username: $username, usernameLowercase: $usernameLowercase, usernameSearchTerms: $usernameSearchTerms, whatsapp: $whatsapp,}';
+    return 'User{displayName: $displayName, email: $email, instagram: $instagram, phoneNumber: $phoneNumber, snapchat: $snapchat,   uid: $uid , username: $username, usernameLowercase: $usernameLowercase, usernameSearchTerms: $usernameSearchTerms, twitter: $twitter,}';
   }
 
   UserEntity toEntity() {
@@ -104,7 +104,7 @@ class User {
         username: username,
         usernameLowercase: usernameLowercase,
         usernameSearchTerms: usernameSearchTerms,
-        whatsapp: whatsapp);
+        twitter: twitter);
   }
 
   static User fromEntity(UserEntity entity) {
@@ -118,6 +118,6 @@ class User {
         username: entity.username,
         usernameLowercase: entity.usernameLowercase,
         usernameSearchTerms: entity.usernameSearchTerms,
-        whatsapp: entity.whatsapp);
+        twitter: entity.twitter);
   }
 }

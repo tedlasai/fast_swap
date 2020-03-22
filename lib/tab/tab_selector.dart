@@ -28,11 +28,9 @@ class _TabSelector extends State<TabSelector> {
       onTap: (index) => widget.onTabSelected(AppTab.values[index]),
       items: AppTab.values.map((tab) {
         return BottomNavigationBarItem(
-          icon: IconButton(
-              icon: Icon(
-                tab == AppTab.home ? Icons.list : Icons.show_chart,
-              ),
-              onPressed: _clearState()),
+          icon: Icon(
+            tab == AppTab.home ? Icons.list : Icons.show_chart,
+          ),
           title: Text(
             tab == AppTab.home ? 'Home' : 'Account',
           ),
@@ -42,6 +40,6 @@ class _TabSelector extends State<TabSelector> {
   }
 
   _clearState() {
-    BlocProvider.of<SearchBloc>(context).add(SearchUpdated(query: ""));
+    //BlocProvider.of<SearchBloc>(context).add(SearchUpdated(query: ""));
   }
 }

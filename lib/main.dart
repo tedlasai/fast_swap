@@ -1,3 +1,4 @@
+import 'package:fastswap/displayUserData_bloc/displayUserData.dart';
 import 'package:fastswap/search_bloc/search.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
@@ -65,7 +66,9 @@ class App extends StatelessWidget {
           BlocProvider<SearchBloc>(
               create: (context) =>
                   SearchBloc(usersRepository: _firebaseUsersRepository)
-                    ..add(SearchStarted()))
+                    ..add(SearchStarted())),
+          BlocProvider<DisplayUserDataBloc>(
+              create: (context) => DisplayUserDataBloc())
         ],
         child: GestureDetector(
             onTap: () {

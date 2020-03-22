@@ -37,17 +37,18 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
   Stream<SearchState> _mapSearchUpdatedToState(SearchUpdated event) async* {
     QuerySnapshot usersMatchedSnapshot =
-        await _usersRepository.findUsers(event.query);
+        await _usersRepository.findUsers(event.query.toLowerCase());
     List<User> usersMatched = usersMatchedSnapshot.documents
         .map((doc) => User.fromEntity(UserEntity.fromSnapshot(doc)))
         .toList();
-    print("LIST");
-    print(usersMatched);
+
     if (event.query != "") {
       yield HasSearchStringAndResults.queryAndResults(
           event.query, usersMatched);
     } else {
-      yield NoSearchStringAndNoResults();
+      String query = event.query;
+      print("EVENT.query $query");
+      yield NoSearchStringAndNoResults.query(event.query);
     }
   }
 
