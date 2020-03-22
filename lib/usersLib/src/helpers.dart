@@ -11,3 +11,11 @@ List<String> setSearchParam(String username) {
     return null;
   }
 }
+
+String toLower(String username) {
+  if (username != null) {
+    return username.toLowerCase();
+  } else {
+    return null;
+  }
+}

@@ -18,14 +18,14 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
   // Create a text controller. Later, use it to retrieve the
   // current value of the TextField.
   final queryController = TextEditingController();
+
   bool textEmpty;
 
   @override
   void initState() {
     super.initState();
     textEmpty = true;
-    queryController.addListener(_printLatestValue);
-    queryController.addListener(_checkIfTextEmpty);
+    queryController.addListener(_updateQuery);
   }
 
   @override
@@ -55,7 +55,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
                             controller: queryController,
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: "Find Friend",
+                              hintText: "Find Friend By Username",
                               hintStyle: TextStyle(color: Colors.white),
                               prefixIcon:
                                   Icon(Icons.search, color: Colors.white),
@@ -71,8 +71,11 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
     });
   }
 
-  _checkIfTextEmpty() {
+  _updateQuery() {
+    print("TWICE");
     textEmpty = queryController.text == "";
+    BlocProvider.of<SearchBloc>(context)
+        .add(SearchUpdated(query: queryController.text));
   }
 
   _clearQueryController() {
@@ -80,13 +83,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
     //queryController.text = "";
     //filterNod
     FocusScope.of(context).requestFocus(FocusNode()); //hide keyboard
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => queryController.clear());
+    queryController.clear();
     //FocusScope.of(context).requestFocus(FocusNode());
-  }
-
-  _printLatestValue() {
-    BlocProvider.of<SearchBloc>(context)
-        .add(SearchUpdated(query: queryController.text));
   }
 }

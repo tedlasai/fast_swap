@@ -11,6 +11,7 @@ class User {
   final String snapchat;
   final String uid;
   final String username;
+  final String usernameLowercase;
   final List<String> usernameSearchTerms;
   final String whatsapp;
 
@@ -23,6 +24,7 @@ class User {
       @required String uid,
       String username,
       List<String> usernameSearchTerms,
+      String usernameLowercase,
       String whatsapp})
       : displayName = displayName ?? "",
         email = email ?? "",
@@ -31,7 +33,8 @@ class User {
         snapchat = snapchat ?? "",
         uid = uid,
         username = username ?? "",
-        usernameSearchTerms = usernameSearchTerms ?? setSearchParam(username),
+        usernameLowercase = toLower(username),
+        usernameSearchTerms = setSearchParam(usernameLowercase),
         whatsapp = whatsapp ?? "";
 
   User copyWith(
@@ -42,6 +45,7 @@ class User {
       String snapchat,
       String uid,
       String username,
+      String usernameLowercase,
       List<String> usernameSearchTerms,
       String whatsapp}) {
     return User(
@@ -52,6 +56,7 @@ class User {
         snapchat: snapchat ?? this.snapchat,
         uid: uid ?? this.uid,
         username: username ?? this.username,
+        usernameLowercase: usernameLowercase ?? this.usernameLowercase,
         usernameSearchTerms: usernameSearchTerms ?? this.usernameSearchTerms,
         whatsapp: whatsapp ?? this.whatsapp);
   }
@@ -65,6 +70,7 @@ class User {
       snapchat.hashCode ^
       uid.hashCode ^
       username.hashCode ^
+      usernameLowercase.hashCode ^
       usernameSearchTerms.hashCode ^
       whatsapp.hashCode;
 
@@ -84,7 +90,7 @@ class User {
 
   @override
   String toString() {
-    return 'User{displayName: $displayName, email: $email, instagram: $instagram, phoneNumber: $phoneNumber, snapchat: $snapchat,   uid: $uid , username: $username, usernameSearchTerms: $usernameSearchTerms, whatsapp: $whatsapp,}';
+    return 'User{displayName: $displayName, email: $email, instagram: $instagram, phoneNumber: $phoneNumber, snapchat: $snapchat,   uid: $uid , username: $username, usernameLowercase: $usernameLowercase, usernameSearchTerms: $usernameSearchTerms, whatsapp: $whatsapp,}';
   }
 
   UserEntity toEntity() {
@@ -96,6 +102,7 @@ class User {
         snapchat: snapchat,
         uid: uid,
         username: username,
+        usernameLowercase: usernameLowercase,
         usernameSearchTerms: usernameSearchTerms,
         whatsapp: whatsapp);
   }
@@ -109,6 +116,7 @@ class User {
         snapchat: entity.snapchat,
         uid: entity.uid,
         username: entity.username,
+        usernameLowercase: entity.usernameLowercase,
         usernameSearchTerms: entity.usernameSearchTerms,
         whatsapp: entity.whatsapp);
   }

@@ -26,10 +26,10 @@ class UserGetDataBloc extends Bloc<UserGetDataEvent, UserGetDataState> {
     Stream<UserGetDataState> Function(UserGetDataEvent event) next,
   ) {
     final nonDebounceStream = events.where((event) {
-      return (event is! UserGetDataUsernameChanged);
+      return (event is! UserGetDataChanged);
     });
     final debounceStream = events.where((event) {
-      return (event is UserGetDataUsernameChanged);
+      return (event is UserGetDataChanged);
     }).debounceTime(Duration(milliseconds: 300));
     return super.transformEvents(
       nonDebounceStream.mergeWith([debounceStream]),
@@ -43,8 +43,8 @@ class UserGetDataBloc extends Bloc<UserGetDataEvent, UserGetDataState> {
       yield* _mapUserGetDataStart(event);
     } else if (event is UserGetDataSubmitted) {
       yield* _mapUserGetDataSubmitted(event);
-    } else if (event is UserGetDataUsernameChanged) {
-      yield* _mapUserGetDataUsernameChanged(event.username);
+    } else if (event is UserGetDataChanged) {
+      yield* _mapUserGetDataChanged(event);
     } else if (event is UserGetDataUninitialized) {
       yield* _mapUserGetDataUninitialized();
     }
@@ -77,19 +77,23 @@ class UserGetDataBloc extends Bloc<UserGetDataEvent, UserGetDataState> {
     }
   }
 
-  Stream<UserGetDataState> _mapUserGetDataUsernameChanged(
-      String username) async* {
+  Stream<UserGetDataState> _mapUserGetDataChanged(
+      UserGetDataChanged event) async* {
     yield state.update(
-      isUsernameValid: Validators.isValidUsername(username),
+      isUsernameValid: Validators.isValidUsername(event.username),
+      isWhatsappValid: Validators.isValidWhatsapp(event.whatsapp),
     );
   }
 
   Stream<UserGetDataState> _mapUserGetDataSubmitted(
       UserGetDataSubmitted event) async* {
+    print(event.username);
+    print(event.username);
     try {
       User user = User(
           uid: event.uid,
           username: event.username,
+          whatsapp: event.whatsapp,
           displayName: event.displayName);
       _usersRepository.setNewUser(user);
       yield UserGetDataState.success();

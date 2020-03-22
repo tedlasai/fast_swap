@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:fastswap/usersLib/users_repository.dart';
 
 abstract class SearchState extends Equatable {
   const SearchState(this.hasQuery, this.query);
@@ -10,20 +11,27 @@ abstract class SearchState extends Equatable {
   List<Object> get props => [hasQuery, query];
 
   @override
-  String toString() =>
-      'SearchState { hasQuery: $hasQuery, displayName:$query }';
+  String toString() => 'SearchState { hasQuery: $hasQuery, query:$query }';
 }
 
 class Uninitialized extends SearchState {
   const Uninitialized() : super(false, '');
 }
 
-class HasSearchString extends SearchState {
-  const HasSearchString() : super(false, '');
+class HasSearchStringAndResults extends SearchState {
+  final List<User> usersMatched;
 
-  const HasSearchString.query(query) : super(true, query);
+  //final int numUsersMatched;
+
+  const HasSearchStringAndResults(this.usersMatched) : super(true, '');
+
+  const HasSearchStringAndResults.queryAndResults(query, this.usersMatched)
+      : super(true, query);
+
+  @override
+  String toString() => 'HasSearchStrings { hasQuery: $hasQuery, query:$query }';
 }
 
-class NoSearchString extends SearchState {
-  const NoSearchString() : super(false, '');
+class NoSearchStringAndNoResults extends SearchState {
+  const NoSearchStringAndNoResults() : super(false, '');
 }

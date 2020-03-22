@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fastswap/search_bloc/search.dart';
+import 'package:fastswap/usersLib/src/entities/entities.dart';
 import 'package:meta/meta.dart';
 import 'package:fastswap/user_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -37,15 +38,20 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   Stream<SearchState> _mapSearchUpdatedToState(SearchUpdated event) async* {
     QuerySnapshot usersMatchedSnapshot =
         await _usersRepository.findUsers(event.query);
-    print(usersMatchedSnapshot.documents);
+    List<User> usersMatched = usersMatchedSnapshot.documents
+        .map((doc) => User.fromEntity(UserEntity.fromSnapshot(doc)))
+        .toList();
+    print("LIST");
+    print(usersMatched);
     if (event.query != "") {
-      yield HasSearchString.query(event.query);
+      yield HasSearchStringAndResults.queryAndResults(
+          event.query, usersMatched);
     } else {
-      yield NoSearchString();
+      yield NoSearchStringAndNoResults();
     }
   }
 
   Stream<SearchState> _mapSearchClearToState() async* {
-    yield NoSearchString();
+    yield NoSearchStringAndNoResults();
   }
 }

@@ -11,9 +11,11 @@ class UserGetDataState {
   final String userEmail;
   final String username;
   final String uid;
+  final String whatsapp;
+  final String isWhatsappValid;
 
   bool get isFormValid =>
-      isUsernameValid == "VALID" && isUsernameValid == "VALID";
+      isUsernameValid == "VALID" && isWhatsappValid == "VALID";
 
   String errorMessage() {
     if (isUsernameValid != "VALID") {
@@ -32,7 +34,9 @@ class UserGetDataState {
       this.isUsernameValid,
       this.userEmail,
       this.username,
-      this.uid});
+      this.uid,
+      this.whatsapp,
+      this.isWhatsappValid});
 
   factory UserGetDataState.empty() {
     return UserGetDataState(
@@ -46,9 +50,13 @@ class UserGetDataState {
   }
 
   UserGetDataState update(
-      {String isUsernameValid, String username, String uid}) {
+      {String isUsernameValid,
+      String isWhatsappValid,
+      String username,
+      String uid}) {
     return copyWith(
       isUsernameValid: isUsernameValid,
+      isWhatsappValid: isWhatsappValid,
       username: username,
       uid: uid,
       hasUserData: false,
@@ -72,6 +80,7 @@ class UserGetDataState {
   factory UserGetDataState.success() {
     return UserGetDataState(
       isUsernameValid: "VALID",
+      isWhatsappValid: "VALID",
       isSubmitting: false,
       hasUserData: true,
       hasLoadedUser: true,
@@ -83,6 +92,7 @@ class UserGetDataState {
   factory UserGetDataState.loadedUser() {
     return UserGetDataState(
       isUsernameValid: "VALID",
+      isWhatsappValid: "VALID",
       isSubmitting: false,
       hasUserData: false,
       hasLoadedUser: true,
@@ -94,6 +104,7 @@ class UserGetDataState {
   factory UserGetDataState.loading() {
     return UserGetDataState(
       isUsernameValid: "VALID",
+      isWhatsappValid: "VALID",
       isSubmitting: true,
       hasUserData: false,
       hasLoadedUser: true,
@@ -104,6 +115,8 @@ class UserGetDataState {
 
   UserGetDataState copyWith({
     String isUsernameValid,
+    String whatsapp,
+    String isWhatsappValid,
     String uid,
     String username,
     bool isSubmitEnabled,
@@ -117,6 +130,7 @@ class UserGetDataState {
       username: username ?? this.username,
       uid: uid ?? this.uid,
       isUsernameValid: isUsernameValid ?? this.isUsernameValid,
+      isWhatsappValid: isWhatsappValid ?? this.isWhatsappValid,
       isSubmitting: isSubmitting ?? this.isSubmitting,
       hasUserData: hasUserData ?? this.hasUserData,
       hasLoadedUser: hasLoadedUser ?? this.hasLoadedUser,
@@ -130,7 +144,8 @@ class UserGetDataState {
     return '''UserGetDataState {
       hasUserData: $hasUserData,
       hasLoadedUser: $hasLoadedUser,
-      isUsernameValid: $isUsernameValid,    
+      isUsernameValid: $isUsernameValid, 
+      isWhatsappValid: $isWhatsappValid,   
       isSubmitting: $isSubmitting,
       isSuccess: $isSuccess,
       isFailure: $isFailure

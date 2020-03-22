@@ -34,6 +34,21 @@ class Validators {
       return "VALID";
   }
 
+  static isValidWhatsapp(String username) {
+    if (!_usernameStartUnderscoreCharRegExp.hasMatch(username)) {
+      return "Username can't start with special character.";
+    } else if (_usernameEndingChar(username)) {
+      return "Username can't end with special character.";
+    } else if (_username2AdjacentSpecialCharsRegExp(username)) {
+      return "Username can't have 2 adjacent underscores.";
+    } else if (!_usernameAlphanumericRegExp.hasMatch(username)) {
+      return "Username can have letters, numbers, underscores.";
+    } else if (!_usernameLengthCheckRegExp.hasMatch(username)) {
+      return "Username Length must be 8-20 characters.";
+    } else
+      return "VALID";
+  }
+
   static isValidPassword(String password) {
     return _passwordRegExp.hasMatch(password);
   }
