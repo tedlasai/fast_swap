@@ -22,4 +22,16 @@ class SearchUpdated extends SearchEvent {
   String toString() => 'SearchUpdated { query :$query }';
 }
 
+class SearchStoreQuery extends SearchEvent {
+  final String query;
+
+  const SearchStoreQuery({@required this.query});
+
+  @override
+  List<Object> get props => [query];
+
+  @override
+  String toString() => 'SearchStoreQuery { query :$query }';
+}
+
 class SearchClear extends SearchEvent {}

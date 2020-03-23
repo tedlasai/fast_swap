@@ -37,3 +37,7 @@ class NoSearchStringAndNoResults extends SearchState {
 
   const NoSearchStringAndNoResults.query(query) : super(false, query);
 }
+
+class StoreQuery extends SearchState {
+  const StoreQuery(hasQuery, query) : super(hasQuery, query);
+}

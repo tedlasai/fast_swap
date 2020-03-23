@@ -43,11 +43,14 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SearchBloc, SearchState>(builder: (context, state) {
-      //if query stored and text field is empty then store query back into textfield
-      if (queryController.text == "" && state.query != "") {
-        queryController.text = state.query;
-        queryController.selection = TextSelection.fromPosition(TextPosition(
-            offset: queryController.text.length)); //set cursor position
+      //if query stored when going to other page and text field is empty then store query back into textfield
+      if (state is StoreQuery) {
+        if (queryController.text == "" && state.query != "") {
+          queryController.text = state.query;
+          queryController.selection = TextSelection.fromPosition(TextPosition(
+              offset: queryController.text.length)); //set cursor position
+        }
+        _updateQuery(); //set query to proper state after loading
       }
       return AppBar(
           title: Container(
@@ -94,7 +97,8 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
     //queryController.text = "";
     //filterNod
     FocusScope.of(context).requestFocus(FocusNode()); //hide keyboard
-    queryController.clear();
+    WidgetsBinding.instance.addPostFrameCallback(
+        (_) => queryController.clear()); //custom clear to not cause error
     //FocusScope.of(context).requestFocus(FocusNode());
   }
 }

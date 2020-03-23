@@ -83,7 +83,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                     itemCount: usersMatched.length,
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
-                          onTap: () => _onCardClicked(index),
+                          onTap: () => _onCardClicked(index, searchState.query),
                           child: Card(
                             child: Padding(
                               padding: EdgeInsets.all(10.0),
@@ -121,8 +121,9 @@ class _HomeWidgetState extends State<HomeWidget> {
     });
   }
 
-  _onCardClicked(int index) {
+  _onCardClicked(int index, String query) {
     //print("CARD CLICKED $index");
+    BlocProvider.of<SearchBloc>(context).add(SearchStoreQuery(query: query));
     BlocProvider.of<DisplayUserDataBloc>(context)
         .add(DisplayUserDataUpdated(data: usersMatched[index]));
   }

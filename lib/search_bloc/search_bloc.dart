@@ -28,6 +28,8 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       yield* _mapSearchUpdatedToState(event);
     } else if (event is SearchClear) {
       yield* _mapSearchClearToState();
+    } else if (event is SearchStoreQuery) {
+      yield* _mapSearchStoreQueryToState(event);
     }
   }
 
@@ -46,13 +48,16 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       yield HasSearchStringAndResults.queryAndResults(
           event.query, usersMatched);
     } else {
-      String query = event.query;
-      print("EVENT.query $query");
       yield NoSearchStringAndNoResults.query(event.query);
     }
   }
 
   Stream<SearchState> _mapSearchClearToState() async* {
     yield NoSearchStringAndNoResults();
+  }
+
+  Stream<SearchState> _mapSearchStoreQueryToState(
+      SearchStoreQuery event) async* {
+    yield StoreQuery(event.query != "", event.query);
   }
 }
