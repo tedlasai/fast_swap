@@ -4,6 +4,7 @@ import 'package:fastswap/tab/bloc/tab.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fastswap/search_bloc/search.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomAccountAppBar extends StatefulWidget
     implements PreferredSizeWidget {
@@ -34,7 +35,7 @@ class _CustomAccountAppBarState extends State<CustomAccountAppBar> {
           icon: Icon(Icons.exit_to_app),
           onPressed: () {
             BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
-
+            BlocProvider.of<SearchBloc>(context).add(SearchClear());
             BlocProvider.of<TabBloc>(context).add(
                 UpdateTab(AppTab.home)); //reset to home next time you log in
           },

@@ -8,16 +8,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class DisplayUserDataScreen extends StatelessWidget {
   @override
   User data;
+  String twitter;
+  String displayname;
 
   Widget build(BuildContext context) {
     return BlocBuilder<DisplayUserDataBloc, DisplayUserDataState>(
         builder: (displayUserContext, displayUserDataState) {
       data = displayUserDataState.data;
-      String twitter = data.twitter;
-      print("TWITTER");
+      twitter = data.twitter;
+      displayname = data.displayName;
       return Scaffold(
         appBar: AppBar(
-            title: Text('Display User Data'),
+            title: Text(displayname),
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {
