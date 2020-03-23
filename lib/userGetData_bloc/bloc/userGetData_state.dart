@@ -7,19 +7,40 @@ class UserGetDataState {
   final bool isSuccess;
   final bool isFailure;
   final bool isSubmitting;
-  final String isUsernameValid;
-  final String userEmail;
-  final String username;
   final String uid;
+  final String username;
+  final String email;
+  final String phoneNumber;
+  final String snapchat;
+  final String facebook;
+  final String instagram;
   final String twitter;
+  final String isUsernameValid;
+  final String isEmailValid;
+  final String isPhoneNumberValid;
+  final String isSnapchatValid;
+  final String isFacebookValid;
+  final String isInstagramValid;
   final String isTwitterValid;
 
   bool get isFormValid =>
-      isUsernameValid == "VALID" && isTwitterValid == "VALID";
+      isUsernameValid == "VALID" && isEmailValid == "VALID" &&
+          isPhoneNumberValid == "VALID" && isSnapchatValid == "VALID" &&
+          isFacebookValid == "VALID" && isInstagramValid == "VALID" && isTwitterValid == "VALID";
 
   String errorMessage() {
     if (isUsernameValid != "VALID") {
       return isUsernameValid;
+    } else if (isEmailValid != "VALID") {
+      return isEmailValid;
+    } else if (isPhoneNumberValid != "VALID") {
+      return isPhoneNumberValid;
+    } else if (isSnapchatValid != "VALID") {
+      return isSnapchatValid;
+    } else if (isInstagramValid != "VALID") {
+      return isInstagramValid;
+    } else if (isTwitterValid != "VALID") {
+      return isTwitterValid;
     } else {
       return "";
     }
@@ -30,33 +51,76 @@ class UserGetDataState {
     this.isSuccess,
     this.hasLoadedUser,
     this.isSubmitting,
-    this.isUsernameValid,
-    this.userEmail,
-    this.username,
     this.uid,
+    this.username,
+    this.email,
+    this.phoneNumber,
+    this.snapchat,
+    this.facebook,
+    this.instagram,
     this.twitter,
+    this.isUsernameValid,
+    this.isEmailValid,
+    this.isPhoneNumberValid,
+    this.isSnapchatValid,
+    this.isFacebookValid,
+    this.isInstagramValid,
     this.isTwitterValid});
 
   factory UserGetDataState.empty() {
-    return UserGetDataState(
-        hasLoadedUser: false,
-        isSuccess: false,
-        isFailure: false,
-        hasUserData: false,
-        isSubmitting: false,
-        isUsernameValid: "VALID",
-        username: "adfsdf");
+      return UserGetDataState(
+          hasLoadedUser: false,
+          isSuccess: false,
+          isFailure: false,
+          hasUserData: false,
+          isSubmitting: false,
+          username: "adfsdf",
+          email: "adfsdf",
+          phoneNumber: "adfsdf",
+          snapchat: "adfsdf",
+          facebook: "adfsdf",
+          instagram: "adfsdf",
+          twitter: "adfsdf",
+          isUsernameValid: "VALID",
+          isEmailValid: "VALID",
+          isPhoneNumberValid: "VALID",
+          isSnapchatValid: "VALID",
+          isFacebookValid: "VALID",
+          isInstagramValid: "VALID",
+          isTwitterValid: "VALID");
   }
 
-  UserGetDataState update({String isUsernameValid,
-    String isTwitterValid,
+  UserGetDataState update({String uid,
     String username,
-    String uid}) {
+    String email,
+    String phoneNumber,
+    String snapchat,
+    String facebook,
+    String instagram,
+    String twitter,
+    String isUsernameValid,
+    String isEmailValid,
+    String isPhoneNumberValid,
+    String isSnapchatValid,
+    String isFacebookValid,
+    String isInstagramValid,
+    String isTwitterValid}) {
     return copyWith(
-      isUsernameValid: isUsernameValid,
-      isTwitterValid: isTwitterValid,
-      username: username,
       uid: uid,
+      username: username,
+      email: email,
+      phoneNumber: phoneNumber,
+      snapchat: snapchat,
+      facebook: facebook,
+      instagram: instagram,
+      twitter: twitter,
+      isUsernameValid: isUsernameValid,
+      isEmailValid: isEmailValid,
+      isPhoneNumberValid: isPhoneNumberValid,
+      isSnapchatValid: isSnapchatValid,
+      isFacebookValid: isFacebookValid,
+      isInstagramValid: isInstagramValid,
+      isTwitterValid: isTwitterValid,
       hasUserData: false,
       isSubmitting: false,
       isSuccess: false,
@@ -67,6 +131,12 @@ class UserGetDataState {
   factory UserGetDataState.failure() {
     return UserGetDataState(
       isUsernameValid: "",
+      isEmailValid: "",
+      isPhoneNumberValid: "",
+      isSnapchatValid: "",
+      isFacebookValid: "",
+      isInstagramValid: "",
+      isTwitterValid: "",
       isSubmitting: false,
       hasUserData: false,
       hasLoadedUser: false,
@@ -78,6 +148,11 @@ class UserGetDataState {
   factory UserGetDataState.success() {
     return UserGetDataState(
       isUsernameValid: "VALID",
+      isEmailValid: "VALID",
+      isPhoneNumberValid: "VALID",
+      isSnapchatValid: "VALID",
+      isFacebookValid: "VALID",
+      isInstagramValid: "VALID",
       isTwitterValid: "VALID",
       isSubmitting: false,
       hasUserData: true,
@@ -90,6 +165,11 @@ class UserGetDataState {
   factory UserGetDataState.loadedUser() {
     return UserGetDataState(
       isUsernameValid: "VALID",
+      isEmailValid: "VALID",
+      isPhoneNumberValid: "VALID",
+      isSnapchatValid: "VALID",
+      isFacebookValid: "VALID",
+      isInstagramValid: "VALID",
       isTwitterValid: "VALID",
       isSubmitting: false,
       hasUserData: false,
@@ -102,6 +182,11 @@ class UserGetDataState {
   factory UserGetDataState.loading() {
     return UserGetDataState(
       isUsernameValid: "VALID",
+      isEmailValid: "VALID",
+      isPhoneNumberValid: "VALID",
+      isSnapchatValid: "VALID",
+      isFacebookValid: "VALID",
+      isInstagramValid: "VALID",
       isTwitterValid: "VALID",
       isSubmitting: true,
       hasUserData: false,
@@ -112,11 +197,21 @@ class UserGetDataState {
   }
 
   UserGetDataState copyWith({
-    String isUsernameValid,
-    String twitter,
-    String isTwitterValid,
     String uid,
     String username,
+    String email,
+    String phoneNumber,
+    String snapchat,
+    String facebook,
+    String instagram,
+    String twitter,
+    String isUsernameValid,
+    String isEmailValid,
+    String isPhoneNumberValid,
+    String isSnapchatValid,
+    String isFacebookValid,
+    String isInstagramValid,
+    String isTwitterValid,
     bool isSubmitEnabled,
     bool isSubmitting,
     bool hasUserData,
@@ -125,9 +220,20 @@ class UserGetDataState {
     bool isFailure,
   }) {
     return UserGetDataState(
-      username: username ?? this.username,
       uid: uid ?? this.uid,
+      username: username ?? this.username,
+      email: email ?? this.email,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      snapchat: snapchat ?? this.snapchat,
+      facebook: facebook ?? this.facebook,
+      instagram: instagram ?? this.instagram,
+      twitter: twitter ?? this.twitter,
       isUsernameValid: isUsernameValid ?? this.isUsernameValid,
+      isEmailValid: isEmailValid ?? this.isEmailValid,
+      isPhoneNumberValid: isPhoneNumberValid ?? this.isPhoneNumberValid,
+      isSnapchatValid: isSnapchatValid ?? this.isSnapchatValid,
+      isFacebookValid: isFacebookValid ?? this.isFacebookValid,
+      isInstagramValid: isInstagramValid ?? this.isInstagramValid,
       isTwitterValid: isTwitterValid ?? this.isTwitterValid,
       isSubmitting: isSubmitting ?? this.isSubmitting,
       hasUserData: hasUserData ?? this.hasUserData,
@@ -143,6 +249,11 @@ class UserGetDataState {
       hasUserData: $hasUserData,
       hasLoadedUser: $hasLoadedUser,
       isUsernameValid: $isUsernameValid, 
+      isEmailValid: $isEmailValid,
+      isPhoneNumberValid: $isPhoneNumberValid,
+      isSnapchatValid: $isSnapchatValid,
+      isFacebookValid: $isFacebookValid,
+      isInstagramValid: $isInstagramValid,
       isTwitterValid: $isTwitterValid,   
       isSubmitting: $isSubmitting,
       isSuccess: $isSuccess,

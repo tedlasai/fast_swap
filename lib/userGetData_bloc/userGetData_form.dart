@@ -26,13 +26,17 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
   String uid;
   String displayName;
   final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _snapchatController = TextEditingController();
+  final TextEditingController _instagramController = TextEditingController();
+  final TextEditingController _facebookController = TextEditingController();
   final TextEditingController _twitterController = TextEditingController();
 
   //final TextEditingController _passwordController = TextEditingController();
 
   bool get isPopulated =>
-      _usernameController.text.isNotEmpty &&
-          _twitterController.text.isNotEmpty;
+      _usernameController.text.isNotEmpty;
 
   bool isSubmitButtonEnabled(UserGetDataState state) {
     return state.isFormValid && isPopulated && !state.isSubmitting;
@@ -49,6 +53,11 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
     displayName = widget._displayName;
     _UserGetDataBloc = BlocProvider.of<UserGetDataBloc>(context);
     _usernameController.addListener(_onDataChanged);
+    _emailController.addListener(_onDataChanged);
+    _phoneNumberController.addListener(_onDataChanged);
+    _snapchatController.addListener(_onDataChanged);
+    _facebookController.addListener(_onDataChanged);
+    _instagramController.addListener(_onDataChanged);
     _twitterController.addListener(_onDataChanged);
   }
 
@@ -69,9 +78,6 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
               ),
             );
         }
-        if (state.isSuccess) {
-          //BlocProvider.of<UserGetDataBloc>(context).add(UserGetDataSubmitted());
-        }
       },
       child: BlocBuilder<UserGetDataBloc, UserGetDataState>(
         builder: (context, state) {
@@ -88,7 +94,7 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
                     controller: _usernameController,
                     decoration: InputDecoration(
                       icon: Icon(Icons.person),
-                      labelText: 'Username',
+                      labelText: 'Username (required)',
                     ),
                     keyboardType: TextInputType.text,
                     autovalidate: true,
@@ -100,19 +106,94 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
                     },
                   ),
                   TextFormField(
+                    controller: _emailController,
+                    decoration: InputDecoration(
+                      icon: Icon(Icons.person),
+                      labelText: 'Email (optional)',
+                    ),
+                    keyboardType: TextInputType.emailAddress,
+//                    autovalidate: true,
+                    autocorrect: false,
+//                    validator: (_) {
+//                      return state.isUsernameValid != "VALID"
+//                          ? 'Invalid Username'
+//                          : null;
+//                    },
+                  ),
+                  TextFormField(
+                    controller: _phoneNumberController,
+                    decoration: InputDecoration(
+                      icon: Icon(Icons.person),
+                      labelText: 'Phone Number (optional)',
+                    ),
+                    keyboardType: TextInputType.number,
+//                    autovalidate: true,
+                    autocorrect: false,
+//                    validator: (_) {
+//                      return state.isUsernameValid != "VALID"
+//                          ? 'Invalid Username'
+//                          : null;
+//                    },
+                  ),
+                  TextFormField(
+                    controller: _snapchatController,
+                    decoration: InputDecoration(
+                      icon: Icon(Icons.person),
+                      labelText: 'Snapchat (optional)',
+                    ),
+                    keyboardType: TextInputType.text,
+//                    autovalidate: true,
+                    autocorrect: false,
+//                    validator: (_) {
+//                      return state.isUsernameValid != "VALID"
+//                          ? 'Invalid Username'
+//                          : null;
+//                    },
+                  ),
+                  TextFormField(
+                    controller: _facebookController,
+                    decoration: InputDecoration(
+                      icon: Icon(Icons.person),
+                      labelText: 'Facebook (optional)',
+                    ),
+                    keyboardType: TextInputType.text,
+//                    autovalidate: true,
+                    autocorrect: false,
+//                    validator: (_) {
+//                      return state.isUsernameValid != "VALID"
+//                          ? 'Invalid Username'
+//                          : null;
+//                    },
+                  ),
+                  TextFormField(
+                    controller: _instagramController,
+                    decoration: InputDecoration(
+                      icon: Icon(Icons.person),
+                      labelText: 'Instagram (optional)',
+                    ),
+                    keyboardType: TextInputType.text,
+//                    autovalidate: true,
+                    autocorrect: false,
+//                    validator: (_) {
+//                      return state.isUsernameValid != "VALID"
+//                          ? 'Invalid Username'
+//                          : null;
+//                    },
+                  ),
+                  TextFormField(
                     controller: _twitterController,
                     decoration: InputDecoration(
                       icon: Icon(Icons.person),
-                      labelText: 'Twitter',
+                      labelText: 'Twitter (optional)',
                     ),
                     keyboardType: TextInputType.text,
-                    autovalidate: true,
+//                    autovalidate: true,
                     autocorrect: false,
-                    validator: (_) {
-                      return state.isTwitterValid != "VALID"
-                          ? 'Invalid Twitter Number'
-                          : null;
-                    },
+//                    validator: (_) {
+//                      return state.isUsernameValid != "VALID"
+//                          ? 'Invalid Username'
+//                          : null;
+//                    },
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 20),
@@ -139,6 +220,11 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
   @override
   void dispose() {
     _usernameController.dispose();
+    _emailController.dispose();
+    _phoneNumberController.dispose();
+    _snapchatController.dispose();
+    _facebookController.dispose();
+    _instagramController.dispose();
     _twitterController.dispose();
     //_passwordController.dispose();
     super.dispose();
@@ -148,6 +234,11 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
     _UserGetDataBloc.add(
       UserGetDataChanged(
           username: _usernameController.text,
+          email: _emailController.text,
+          phoneNumber: _phoneNumberController.text,
+          snapchat: _snapchatController.text,
+          facebook: _facebookController.text,
+          instagram: _instagramController.text,
           twitter: _twitterController.text),
     );
   }
@@ -156,6 +247,11 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
     _UserGetDataBloc.add(
       UserGetDataSubmitted(
           username: _usernameController.text,
+          email: _emailController.text,
+          phoneNumber: _phoneNumberController.text,
+          snapchat: _snapchatController.text,
+          facebook: _facebookController.text,
+          instagram: _instagramController.text,
           twitter: _twitterController.text,
           uid: uid,
           displayName: displayName),

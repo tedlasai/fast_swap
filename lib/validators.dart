@@ -34,7 +34,7 @@ class Validators {
       return "VALID";
   }
 
-  static isValidTwitter(String username) {
+  static isValidHandle(String username) {
     if (!_usernameStartUnderscoreCharRegExp.hasMatch(username)) {
       return "Username can't start with special character.";
     } else if (_usernameEndingChar(username)) {
