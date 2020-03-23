@@ -22,5 +22,7 @@ class HasUserData extends DisplayUserDataState {
 }
 
 class NoUserData extends DisplayUserDataState {
-  NoUserData() : super(false, User());
+  NoUserData() : super(false, User(uid: ""));
+
+  ///CHANGED SOMETHING EHRE IF IT BREAKS REMOVE THE QUOTES
 }
