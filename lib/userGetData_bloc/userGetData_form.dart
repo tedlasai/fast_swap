@@ -126,7 +126,7 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
                       icon: Icon(Icons.person),
                       labelText: 'Phone Number (optional)',
                     ),
-                    keyboardType: TextInputType.number,
+                    keyboardType: TextInputType.text,
                     autovalidate: true,
                     autocorrect: false,
                     validator: (_) {

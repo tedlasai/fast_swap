@@ -89,7 +89,6 @@ class UserGetDataBloc extends Bloc<UserGetDataEvent, UserGetDataState> {
         isInstagramValid: Validators.isValidHandle(event.instagram),
         isTwitterValid: Validators.isValidHandle(event.twitter),
         );
-    Validators.getNumbersFromPhoneNumber(event.username);
   }
 
   Stream<UserGetDataState> _mapUserGetDataSubmitted(
@@ -101,7 +100,7 @@ class UserGetDataBloc extends Bloc<UserGetDataEvent, UserGetDataState> {
           twitter: event.twitter,
           facebook: event.facebook,
           snapchat: event.snapchat,
-          phoneNumber: event.phoneNumber,
+          phoneNumber: Validators.getNumbersFromPhoneNumber(event.phoneNumber),
           instagram: event.instagram,
           email: event.email,
           displayName: event.displayName);

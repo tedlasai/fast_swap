@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 class Validators {
   static final RegExp _usernameLengthCheckRegExp = RegExp(
     r'^\w{8,20}$',
@@ -6,12 +8,10 @@ class Validators {
     r'^(?![_])',
   );
 
-  static final RegExp _phoneNumberMatchRegExp = RegExp(r'^[\d ()-]*$');
+  static final RegExp _phoneNumberMatchRegExp = RegExp(r'^[\d ()x\+-]*$');
   static final RegExp _usernameAlphanumericRegExp = RegExp(r'^[a-zA-Z0-9_]+$');
   static final RegExp _handleMatchRegExp = RegExp(r'^[a-zA-Z0-9_\.-]*$');
   static final RegExp _emailMatchRegExp = RegExp(r'^[a-zA-z0-9\._%+-]+@[a-zA-Z0-9\.-]+\.[a-zA-Z]{2,}$');
-
-  static final RegExp _justTheNumbers = RegExp(r'+?\d*$');
 
   static _usernameEndingChar(String username) {
     return username.endsWith("_");
@@ -53,7 +53,7 @@ class Validators {
     } else if (_usernameEndingChar(email)) {
       return "Email can't end with special character.";
     } else if (_usernameContainsStar(email)) {
-      return "Handle can't have * symbol";
+      return "Email can't have * symbol";
     } else if (_username2AdjacentSpecialCharsRegExp(email)) {
       return "Email can't have 2 adjacent underscores.";
     } else if (!_emailMatchRegExp.hasMatch(email)) {
@@ -64,7 +64,15 @@ class Validators {
 
   static isValidPhoneNumber(String number) {
     if (!_phoneNumberMatchRegExp.hasMatch(number)) {
-      return "Phone number can have numbers, underscores, hyphens and spaces.";
+      return "Only numbers, hyphens and spaces.";
+    } else if(number == "") {
+      return "VALID";
+    } else if(hasMiddlePlus(number)) {
+      return "Invalid + sign";
+    } else if(getNumbersFromPhoneNumber(number).length < 4) {
+      return "Please enter at least 4 digits";
+    } else if(getNumbersFromPhoneNumber(number).length > 20) {
+      return "Please enter less than 20 digits";
     } else
       return "VALID";
   }
@@ -88,8 +96,15 @@ class Validators {
     return _passwordRegExp.hasMatch(password);
   }
 
-  static getNumbersFromPhoneNumber(String phoneNumber) {
-
-    print(phoneNumber.length);
+  static hasMiddlePlus(String phoneNumber) {
+    phoneNumber = phoneNumber.substring(1);
+    return phoneNumber.contains("+");
   }
+
+  static final RegExp _onlyNumbers = RegExp(r'[^0-9\+x]');
+
+  static String getNumbersFromPhoneNumber(String phoneNumber) {
+    return phoneNumber.replaceAll(_onlyNumbers, "");
+  }
+
 }
