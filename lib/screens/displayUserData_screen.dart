@@ -25,7 +25,7 @@ class DisplayUserDataScreen extends StatelessWidget {
       data = displayUserDataState.data;
       twitter = data.twitter;
       displayname = data.displayName;
-      facebook = twitter;
+      facebook = data.facebook;
       snapchat = data.snapchat;
       instagram = data.instagram;
       email = data.email;
