@@ -9,6 +9,7 @@ class User {
   final String instagram;
   final String phoneNumber;
   final String snapchat;
+  final String facebook;
   final String uid;
   final String username;
   final String usernameLowercase;
@@ -20,6 +21,7 @@ class User {
       String email,
       String instagram,
       String phoneNumber,
+      String facebook,
       String snapchat,
       @required String uid,
       String username,
@@ -31,6 +33,7 @@ class User {
         instagram = instagram ?? "",
         phoneNumber = phoneNumber ?? "",
         snapchat = snapchat ?? "",
+        facebook = facebook ?? "",
         uid = uid,
         username = username ?? "",
         usernameLowercase = toLower(username),
@@ -41,6 +44,7 @@ class User {
       {String displayName,
       String email,
       String instagram,
+      String facebook,
       String phoneNumber,
       String snapchat,
       String uid,
@@ -54,6 +58,7 @@ class User {
         instagram: instagram ?? this.instagram,
         phoneNumber: phoneNumber ?? this.phoneNumber,
         snapchat: snapchat ?? this.snapchat,
+        facebook: facebook ?? this.facebook,
         uid: uid ?? this.uid,
         username: username ?? this.username,
         usernameLowercase: usernameLowercase ?? this.usernameLowercase,
@@ -68,6 +73,7 @@ class User {
       instagram.hashCode ^
       phoneNumber.hashCode ^
       snapchat.hashCode ^
+      facebook.hashCode ^
       uid.hashCode ^
       username.hashCode ^
       usernameLowercase.hashCode ^
@@ -82,6 +88,7 @@ class User {
           displayName == other.displayName &&
           email == other.email &&
           instagram == other.instagram &&
+          facebook == other.facebook &&
           snapchat == other.snapchat &&
           phoneNumber == other.phoneNumber &&
           uid == other.uid &&
@@ -90,7 +97,7 @@ class User {
 
   @override
   String toString() {
-    return 'User{displayName: $displayName, email: $email, instagram: $instagram, phoneNumber: $phoneNumber, snapchat: $snapchat,   uid: $uid , username: $username, usernameLowercase: $usernameLowercase, usernameSearchTerms: $usernameSearchTerms, twitter: $twitter,}';
+    return 'User{displayName: $displayName, email: $email, facebook: $facebook, instagram: $instagram, phoneNumber: $phoneNumber, snapchat: $snapchat,   uid: $uid , username: $username, usernameLowercase: $usernameLowercase, usernameSearchTerms: $usernameSearchTerms, twitter: $twitter,}';
   }
 
   UserEntity toEntity() {
@@ -98,6 +105,7 @@ class User {
         displayName: displayName,
         email: email,
         instagram: instagram,
+        facebook: facebook,
         phoneNumber: phoneNumber,
         snapchat: snapchat,
         uid: uid,
@@ -111,6 +119,7 @@ class User {
     return User(
         displayName: entity.displayName,
         email: entity.email,
+        facebook: entity.facebook,
         instagram: entity.instagram,
         phoneNumber: entity.phoneNumber,
         snapchat: entity.snapchat,
