@@ -45,7 +45,27 @@ class DisplayUserDataBloc
 
   Stream<DisplayUserDataState> _mapDisplayUserDataUpdatedByLink(
       DisplayUserDataUpdatedByLink event) async* {
-    //yield HasUserData(event.data);
+    String username = event.link;
+
+    try {
+      User user;
+
+      QuerySnapshot usersMatchedSnapshot =
+          await _usersRepository.findUsername(username.toLowerCase());
+
+      List<User> usersMatched = usersMatchedSnapshot.documents
+          .map((doc) => User.fromEntity(UserEntity.fromSnapshot(doc)))
+          .toList();
+
+      if (usersMatched.length > 0) {
+        user = usersMatched[0];
+        yield HasUserData(user);
+      } else {
+        yield NoUserData();
+      }
+    } catch (_) {
+      yield NoUserData();
+    }
   }
 
   Stream<DisplayUserDataState> _mapDisplayUserDataClearToState() async* {

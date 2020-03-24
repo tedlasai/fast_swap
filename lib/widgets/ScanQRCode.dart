@@ -1,6 +1,8 @@
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
+import 'package:fastswap/displayUserData_bloc/displayUserData.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_share_file/flutter_share_file.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter/services.dart';
@@ -40,25 +42,22 @@ class ScanQRCodeState extends State<ScanQRCode> {
   Future scan(BuildContext context) async {
     try {
       String barcode = await BarcodeScanner.scan();
-      setState(() => this.barcode = barcode);
+      print("BARCODE $barcode");
+      if (barcode != null && barcode != "") {
+        BlocProvider.of<DisplayUserDataBloc>(context)
+            .add(DisplayUserDataUpdatedByLink(link: barcode));
+      } else {
+        showAlertDialog(context, "Invalid QR Code", "Try Another QR Code");
+      }
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.CameraAccessDenied) {
-        showAlertDialog(context);
-        setState(() {
-          this.barcode = 'The user did not grant the camera permission!';
-        });
-      } else {
-        setState(() => this.barcode = 'Unknown error: $e');
+        showAlertDialog(context, "No Camera Permissions!",
+            "Please enable camera to scan your friends' QR codes.");
       }
-    } on FormatException {
-      setState(() => this.barcode =
-          'null (User returned using the "back"-button before scanning anything. Result)');
-    } catch (e) {
-      setState(() => this.barcode = 'Unknown error: $e');
-    }
+    } on FormatException {} catch (e) {}
   }
 
-  showAlertDialog(BuildContext context) {
+  showAlertDialog(BuildContext context, String title, String content) {
     // set up the button
     Widget okButton = FlatButton(
       child: Text("OK"),
@@ -69,8 +68,8 @@ class ScanQRCodeState extends State<ScanQRCode> {
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("No Camera Permissions!"),
-      content: Text("Please enable camera to scan your friends' QR codes."),
+      title: Text(title),
+      content: Text(content),
       actions: [
         okButton,
       ],

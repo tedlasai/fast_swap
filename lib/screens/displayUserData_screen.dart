@@ -23,13 +23,13 @@ class DisplayUserDataScreen extends StatelessWidget {
     return BlocBuilder<DisplayUserDataBloc, DisplayUserDataState>(
         builder: (displayUserContext, displayUserDataState) {
       data = displayUserDataState.data;
-      twitter = data.twitter;
-      displayname = data.displayName;
-      facebook = data.facebook;
-      snapchat = data.snapchat;
-      instagram = data.instagram;
-      email = data.email;
-      phoneNumber = data.phoneNumber;
+      twitter = data.twitter ?? "";
+      displayname = data.displayName ?? "";
+      facebook = data.facebook ?? "";
+      snapchat = data.snapchat ?? "";
+      instagram = data.instagram ?? "";
+      email = data.email ?? "";
+      phoneNumber = data.phoneNumber ?? "";
 
       return Scaffold(
         appBar: AppBar(
