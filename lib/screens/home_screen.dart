@@ -1,4 +1,5 @@
 import 'package:fastswap/displayUserData_bloc/displayUserData.dart';
+import 'package:fastswap/widgets/ScanQRCode.dart';
 import 'package:fastswap/widgets/accountAppBar_widget.dart';
 import 'package:fastswap/widgets/account_widget.dart';
 import 'package:fastswap/widgets/customSearchBar_widget.dart';
@@ -60,7 +61,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   activeTab: activeTab,
                   onTabSelected: (tab) =>
                       BlocProvider.of<TabBloc>(context).add(UpdateTab(tab)),
-                ));
+                ),
+                floatingActionButton:
+                    activeTab == AppTab.home ? ScanQRCode() : null);
           },
         );
       } else {
