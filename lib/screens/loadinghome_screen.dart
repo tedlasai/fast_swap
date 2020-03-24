@@ -13,9 +13,9 @@ class LoadingHomeScreen extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.exit_to_app),
             onPressed: () {
-              BlocProvider.of<AuthenticationBloc>(context).add(
-                LoggedOut(),
-              );
+              // BlocProvider.of<AuthenticationBloc>(context).add(
+              // LoggedOut(),
+              // );
             },
           )
         ],

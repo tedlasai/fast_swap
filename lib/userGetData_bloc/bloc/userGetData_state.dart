@@ -24,9 +24,13 @@ class UserGetDataState {
   final String isTwitterValid;
 
   bool get isFormValid =>
-      isUsernameValid == "VALID" && isEmailValid == "VALID" &&
-          isPhoneNumberValid == "VALID" && isSnapchatValid == "VALID" &&
-          isFacebookValid == "VALID" && isInstagramValid == "VALID" && isTwitterValid == "VALID";
+      isUsernameValid == "VALID" &&
+      isEmailValid == "VALID" &&
+      isPhoneNumberValid == "VALID" &&
+      isSnapchatValid == "VALID" &&
+      isFacebookValid == "VALID" &&
+      isInstagramValid == "VALID" &&
+      isTwitterValid == "VALID";
 
   String errorMessage() {
     if (isUsernameValid != "VALID") {
@@ -46,65 +50,67 @@ class UserGetDataState {
     }
   }
 
-  UserGetDataState({this.hasUserData,
-    this.isFailure,
-    this.isSuccess,
-    this.hasLoadedUser,
-    this.isSubmitting,
-    this.uid,
-    this.username,
-    this.email,
-    this.phoneNumber,
-    this.snapchat,
-    this.facebook,
-    this.instagram,
-    this.twitter,
-    this.isUsernameValid,
-    this.isEmailValid,
-    this.isPhoneNumberValid,
-    this.isSnapchatValid,
-    this.isFacebookValid,
-    this.isInstagramValid,
-    this.isTwitterValid});
+  UserGetDataState(
+      {this.hasUserData,
+      this.isFailure,
+      this.isSuccess,
+      this.hasLoadedUser,
+      this.isSubmitting,
+      this.uid,
+      this.username,
+      this.email,
+      this.phoneNumber,
+      this.snapchat,
+      this.facebook,
+      this.instagram,
+      this.twitter,
+      this.isUsernameValid,
+      this.isEmailValid,
+      this.isPhoneNumberValid,
+      this.isSnapchatValid,
+      this.isFacebookValid,
+      this.isInstagramValid,
+      this.isTwitterValid});
 
   factory UserGetDataState.empty() {
-      return UserGetDataState(
-          hasLoadedUser: false,
-          isSuccess: false,
-          isFailure: false,
-          hasUserData: false,
-          isSubmitting: false,
-          username: "adfsdf",
-          email: "adfsdf",
-          phoneNumber: "adfsdf",
-          snapchat: "adfsdf",
-          facebook: "adfsdf",
-          instagram: "adfsdf",
-          twitter: "adfsdf",
-          isUsernameValid: "VALID",
-          isEmailValid: "VALID",
-          isPhoneNumberValid: "VALID",
-          isSnapchatValid: "VALID",
-          isFacebookValid: "VALID",
-          isInstagramValid: "VALID",
-          isTwitterValid: "VALID");
+    return UserGetDataState(
+        hasLoadedUser: false,
+        isSuccess: false,
+        isFailure: false,
+        hasUserData: false,
+        isSubmitting: false,
+        username: "adfsdf",
+        email: "adfsdf",
+        phoneNumber: "adfsdf",
+        snapchat: "adfsdf",
+        facebook: "adfsdf",
+        instagram: "adfsdf",
+        twitter: "adfsdf",
+        isUsernameValid: "VALID",
+        isEmailValid: "VALID",
+        isPhoneNumberValid: "VALID",
+        isSnapchatValid: "VALID",
+        isFacebookValid: "VALID",
+        isInstagramValid: "VALID",
+        isTwitterValid: "VALID");
   }
 
-  UserGetDataState update({String uid,
-    String username,
-    String email,
-    String phoneNumber,
-    String snapchat,
-    String facebook,
-    String instagram,
-    String twitter,
-    String isUsernameValid,
-    String isEmailValid,
-    String isPhoneNumberValid,
-    String isSnapchatValid,
-    String isFacebookValid,
-    String isInstagramValid,
-    String isTwitterValid}) {
+  UserGetDataState update(
+      {String uid,
+      String username,
+      String email,
+      String phoneNumber,
+      String snapchat,
+      String facebook,
+      String instagram,
+      String twitter,
+      String isUsernameValid,
+      String isEmailValid,
+      String isPhoneNumberValid,
+      String isSnapchatValid,
+      String isFacebookValid,
+      String isInstagramValid,
+      String isTwitterValid}) {
     return copyWith(
       uid: uid,
       username: username,
@@ -121,7 +127,6 @@ class UserGetDataState {
       isFacebookValid: isFacebookValid,
       isInstagramValid: isInstagramValid,
       isTwitterValid: isTwitterValid,
-      hasUserData: false,
       isSubmitting: false,
       isSuccess: false,
       isFailure: false,

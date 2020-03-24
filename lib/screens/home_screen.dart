@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     : CustomAccountAppBar(),
                 body: activeTab == AppTab.home
                     ? HomeWidget(uid: uid, displayName: displayName)
-                    : BuildColumnGetData(uid: uid, displayName: displayName),
+                    : UserGetDataForm(uid: uid, displayName: displayName),
                 bottomNavigationBar: TabSelector(
                   activeTab: activeTab,
                   onTabSelected: (tab) =>

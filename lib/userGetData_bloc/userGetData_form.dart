@@ -42,6 +42,8 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
     return state.isFormValid && isPopulated && !state.isSubmitting;
   }
 
+  bool hasLoadedInitalData;
+
   UserGetDataBloc _UserGetDataBloc;
 
   //UserRepository get _userRepository => widget._userRepository;
@@ -49,6 +51,8 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
   @override
   void initState() {
     super.initState();
+
+    hasLoadedInitalData = false;
     uid = widget._uid;
     displayName = widget._displayName;
     _UserGetDataBloc = BlocProvider.of<UserGetDataBloc>(context);
@@ -64,32 +68,71 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<UserGetDataBloc, UserGetDataState>(
-      listener: (context, state) {
-        if (!state.isFormValid) {
-          Scaffold.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(
-                content: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [Text(state.errorMessage()), Icon(Icons.error)],
-                ),
-                backgroundColor: Colors.red,
+        listener: (context, state) {
+      if (!state.isFormValid) {
+        Scaffold.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            SnackBar(
+              content: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [Text(state.errorMessage()), Icon(Icons.error)],
               ),
-            );
-        }
-      },
-      child: BlocBuilder<UserGetDataBloc, UserGetDataState>(
-        builder: (context, state) {
+              backgroundColor: Colors.red,
+            ),
+          );
+      }
+    }, child: BlocBuilder<UserGetDataBloc, UserGetDataState>(
+            builder: (context, state) {
+      return BlocBuilder<UsersBloc, UsersState>(
+        builder: (UserCurrentContext, UserCurrentState) {
+          if (!hasLoadedInitalData) {
+            if (UserCurrentState is UserInfoLoaded) {
+              _usernameController.text =
+                  UserCurrentState.userInfo.username != null
+                      ? UserCurrentState.userInfo.username
+                      : "";
+              _emailController.text = UserCurrentState.userInfo.email != null
+                  ? UserCurrentState.userInfo.email
+                  : "";
+              _phoneNumberController.text =
+                  UserCurrentState.userInfo.phoneNumber != null
+                      ? UserCurrentState.userInfo.phoneNumber
+                      : "";
+              _facebookController.text =
+                  UserCurrentState.userInfo.facebook != null
+                      ? UserCurrentState.userInfo.facebook
+                      : "";
+              _instagramController.text =
+                  UserCurrentState.userInfo.instagram != null
+                      ? UserCurrentState.userInfo.instagram
+                      : "";
+              _snapchatController.text =
+                  UserCurrentState.userInfo.snapchat != null
+                      ? UserCurrentState.userInfo.snapchat
+                      : "";
+              _twitterController.text =
+                  UserCurrentState.userInfo.twitter != null
+                      ? UserCurrentState.userInfo.twitter
+                      : "";
+            } else {
+              _usernameController.text = "";
+              _emailController.text = "";
+              _facebookController.text = "";
+              _instagramController.text = "";
+              _snapchatController.text = "";
+              _twitterController.text = "";
+              _phoneNumberController.text = "";
+            }
+            hasLoadedInitalData = true;
+          }
           return Padding(
             padding: EdgeInsets.all(20.0),
             child: Form(
               child: ListView(
+                reverse: true,
+                shrinkWrap: true,
                 children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    child: Image.asset('assets/flutter_logo.png', height: 200),
-                  ),
                   TextFormField(
                     controller: _usernameController,
                     decoration: InputDecoration(
@@ -208,13 +251,13 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
                       ],
                     ),
                   ),
-                ],
+                ].reversed.toList(),
               ),
             ),
           );
         },
-      ),
-    );
+      );
+    }));
   }
 
   @override

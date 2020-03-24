@@ -1,3 +1,4 @@
+import 'package:fastswap/screens/GetDataFormFrontScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -62,7 +63,7 @@ class _UserGetDataScreenState extends State<UserGetDataScreen> {
                 uid: uid,
               );
             } else {
-              return UserGetDataForm(
+              return GetDataFormFrontScreen(
                 uid: uid,
                 displayName: displayName,
               );
