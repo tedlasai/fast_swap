@@ -18,5 +18,7 @@ abstract class UsersRepository {
 
   Future<DocumentReference> pullUser(User user);
 
+  Future<QuerySnapshot> findUsername(String username);
+
   Future<void> updateUser(User user);
 }

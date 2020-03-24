@@ -54,6 +54,17 @@ class FirebaseUsersRepository implements UsersRepository {
     return userCollection.document(User.uid);
   }
 
+  Future<QuerySnapshot> findUsername(String username) async {
+    try {
+      return userCollection
+          .where("username", isEqualTo: username)
+          .limit(1)
+          .getDocuments();
+    } catch (_) {
+      print(_);
+    }
+  }
+
   @override
   Future<void> updateUser(User update) {
     return userCollection

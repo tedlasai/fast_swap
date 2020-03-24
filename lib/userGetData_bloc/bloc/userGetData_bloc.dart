@@ -81,7 +81,7 @@ class UserGetDataBloc extends Bloc<UserGetDataEvent, UserGetDataState> {
       UserGetDataChanged event) async* {
     //need to update with validators
     yield state.update(
-        isUsernameValid: Validators.isValidUsername(event.username),
+        isUsernameValid: await validateUsername(event.username),
         isEmailValid: Validators.isValidEmail(event.email),
         isPhoneNumberValid: Validators.isValidPhoneNumber(event.phoneNumber),
         isSnapchatValid: Validators.isValidHandle(event.snapchat),
@@ -89,6 +89,30 @@ class UserGetDataBloc extends Bloc<UserGetDataEvent, UserGetDataState> {
         isInstagramValid: Validators.isValidHandle(event.instagram),
         isTwitterValid: Validators.isValidHandle(event.twitter),
         );
+  }
+
+  Future<String> validateUsername(String username) async {
+    String firstValidation = Validators.isValidUsername(username);
+    if(firstValidation == "VALID" && !state.hasUserData) {
+      try {
+        QuerySnapshot usersMatchedSnapshot =
+            await _usersRepository.findUsername(username.toLowerCase());
+
+        List<User> usersMatched = usersMatchedSnapshot.documents
+            .map((doc) => User.fromEntity(UserEntity.fromSnapshot(doc)))
+            .toList();
+
+        if(usersMatched.length == 0) {
+          return "VALID";
+        } else {
+          return "Username already exists";
+        }
+      } catch (_) {
+        print("Unique username checking failed horribly");
+      }
+    } else {
+      return firstValidation;
+    }
   }
 
   Stream<UserGetDataState> _mapUserGetDataSubmitted(

@@ -65,6 +65,8 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
     _twitterController.addListener(_onDataChanged);
   }
 
+  bool notNull(Object o) => o != null;
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<UserGetDataBloc, UserGetDataState>(
@@ -133,6 +135,7 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
                 reverse: true,
                 shrinkWrap: true,
                 children: <Widget>[
+                  !state.hasUserData ?
                   TextFormField(
                     controller: _usernameController,
                     decoration: InputDecoration(
@@ -142,6 +145,22 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
                     keyboardType: TextInputType.text,
                     autovalidate: true,
                     autocorrect: false,
+                    validator: (_) {
+                      return state.isUsernameValid != "VALID"
+                          ? 'Invalid Username'
+                          : null;
+                    },
+                  ) : TextFormField(
+                    controller: _usernameController,
+                    decoration: InputDecoration(
+                      icon: Icon(Icons.person),
+                      labelText: 'Username',
+                    ),
+                    keyboardType: TextInputType.text,
+                    style: new TextStyle(color: Colors.grey),
+                    autovalidate: true,
+                    autocorrect: false,
+                    enabled: false,
                     validator: (_) {
                       return state.isUsernameValid != "VALID"
                           ? 'Invalid Username'
@@ -251,7 +270,7 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
                       ],
                     ),
                   ),
-                ].reversed.toList(),
+                ].reversed.where(notNull).toList(),
               ),
             ),
           );
@@ -297,7 +316,8 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
           instagram: _instagramController.text,
           twitter: _twitterController.text,
           uid: uid,
-          displayName: displayName),
+          displayName: displayName,
+          usernameCreated: true),
     );
 
     //update user
