@@ -81,14 +81,19 @@ class UserGetDataBloc extends Bloc<UserGetDataEvent, UserGetDataState> {
       UserGetDataChanged event) async* {
     //need to update with validators
     yield state.update(
-      isUsernameValid: Validators.isValidUsername(event.username),
-      isEmailValid: "VALID", //Validators.isValidHandle(event.email),
-      isPhoneNumberValid: "VALID", //Validators.isValidNumber(event.phoneNumber),
-      isSnapchatValid: "VALID", //Validators.isValidHandle(event.snapchat),
-      isFacebookValid: "VALID", //Validators.isValidHandle(event.facebook),
-      isInstagramValid: "VALID", //Validators.isValidHandle(event.instagram),
-      isTwitterValid: "VALID" //Validators.isValidHandle(event.twitter)
-    );
+        isUsernameValid: Validators.isValidUsername(event.username),
+        isEmailValid: "VALID",
+        //Validators.isValidHandle(event.email),
+        isPhoneNumberValid: "VALID",
+        //Validators.isValidNumber(event.phoneNumber),
+        isSnapchatValid: "VALID",
+        //Validators.isValidHandle(event.snapchat),
+        isFacebookValid: "VALID",
+        //Validators.isValidHandle(event.facebook),
+        isInstagramValid: "VALID",
+        //Validators.isValidHandle(event.instagram),
+        isTwitterValid: "VALID" //Validators.isValidHandle(event.twitter)
+        );
   }
 
   Stream<UserGetDataState> _mapUserGetDataSubmitted(
@@ -98,6 +103,11 @@ class UserGetDataBloc extends Bloc<UserGetDataEvent, UserGetDataState> {
           uid: event.uid,
           username: event.username,
           twitter: event.twitter,
+          facebook: event.facebook,
+          snapchat: event.snapchat,
+          phoneNumber: event.phoneNumber,
+          instagram: event.instagram,
+          email: event.email,
           displayName: event.displayName);
       _usersRepository.setNewUser(user);
       yield UserGetDataState.success();
