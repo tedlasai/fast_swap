@@ -112,13 +112,13 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
                       labelText: 'Email (optional)',
                     ),
                     keyboardType: TextInputType.emailAddress,
-//                    autovalidate: true,
+                    autovalidate: true,
                     autocorrect: false,
-//                    validator: (_) {
-//                      return state.isUsernameValid != "VALID"
-//                          ? 'Invalid Username'
-//                          : null;
-//                    },
+                    validator: (_) {
+                      return state.isEmailValid != "VALID"
+                          ? 'Invalid Email'
+                          : null;
+                    },
                   ),
                   TextFormField(
                     controller: _phoneNumberController,
@@ -127,13 +127,13 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
                       labelText: 'Phone Number (optional)',
                     ),
                     keyboardType: TextInputType.number,
-//                    autovalidate: true,
+                    autovalidate: true,
                     autocorrect: false,
-//                    validator: (_) {
-//                      return state.isUsernameValid != "VALID"
-//                          ? 'Invalid Username'
-//                          : null;
-//                    },
+                    validator: (_) {
+                      return state.isPhoneNumberValid != "VALID"
+                          ? 'Invalid Phone number'
+                          : null;
+                    },
                   ),
                   TextFormField(
                     controller: _snapchatController,
@@ -142,13 +142,13 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
                       labelText: 'Snapchat (optional)',
                     ),
                     keyboardType: TextInputType.text,
-//                    autovalidate: true,
+                    autovalidate: true,
                     autocorrect: false,
-//                    validator: (_) {
-//                      return state.isUsernameValid != "VALID"
-//                          ? 'Invalid Username'
-//                          : null;
-//                    },
+                    validator: (_) {
+                      return state.isSnapchatValid != "VALID"
+                          ? 'Invalid Snapchat'
+                          : null;
+                    },
                   ),
                   TextFormField(
                     controller: _facebookController,
@@ -157,13 +157,13 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
                       labelText: 'Facebook (optional)',
                     ),
                     keyboardType: TextInputType.text,
-//                    autovalidate: true,
+                    autovalidate: true,
                     autocorrect: false,
-//                    validator: (_) {
-//                      return state.isUsernameValid != "VALID"
-//                          ? 'Invalid Username'
-//                          : null;
-//                    },
+                    validator: (_) {
+                      return state.isFacebookValid != "VALID"
+                          ? 'Invalid Facebook'
+                          : null;
+                    },
                   ),
                   TextFormField(
                     controller: _instagramController,
@@ -172,13 +172,13 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
                       labelText: 'Instagram (optional)',
                     ),
                     keyboardType: TextInputType.text,
-//                    autovalidate: true,
+                    autovalidate: true,
                     autocorrect: false,
-//                    validator: (_) {
-//                      return state.isUsernameValid != "VALID"
-//                          ? 'Invalid Username'
-//                          : null;
-//                    },
+                    validator: (_) {
+                      return state.isInstagramValid != "VALID"
+                          ? 'Invalid Instagram'
+                          : null;
+                    },
                   ),
                   TextFormField(
                     controller: _twitterController,
@@ -187,13 +187,13 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
                       labelText: 'Twitter (optional)',
                     ),
                     keyboardType: TextInputType.text,
-//                    autovalidate: true,
+                    autovalidate: true,
                     autocorrect: false,
-//                    validator: (_) {
-//                      return state.isUsernameValid != "VALID"
-//                          ? 'Invalid Username'
-//                          : null;
-//                    },
+                    validator: (_) {
+                      return state.isTwitterValid != "VALID"
+                          ? 'Invalid Twitter'
+                          : null;
+                    },
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 20),

@@ -82,18 +82,14 @@ class UserGetDataBloc extends Bloc<UserGetDataEvent, UserGetDataState> {
     //need to update with validators
     yield state.update(
         isUsernameValid: Validators.isValidUsername(event.username),
-        isEmailValid: "VALID",
-        //Validators.isValidHandle(event.email),
-        isPhoneNumberValid: "VALID",
-        //Validators.isValidNumber(event.phoneNumber),
-        isSnapchatValid: "VALID",
-        //Validators.isValidHandle(event.snapchat),
-        isFacebookValid: "VALID",
-        //Validators.isValidHandle(event.facebook),
-        isInstagramValid: "VALID",
-        //Validators.isValidHandle(event.instagram),
-        isTwitterValid: "VALID" //Validators.isValidHandle(event.twitter)
+        isEmailValid: Validators.isValidEmail(event.email),
+        isPhoneNumberValid: Validators.isValidPhoneNumber(event.phoneNumber),
+        isSnapchatValid: Validators.isValidHandle(event.snapchat),
+        isFacebookValid: Validators.isValidHandle(event.facebook),
+        isInstagramValid: Validators.isValidHandle(event.instagram),
+        isTwitterValid: Validators.isValidHandle(event.twitter),
         );
+    Validators.getNumbersFromPhoneNumber(event.username);
   }
 
   Stream<UserGetDataState> _mapUserGetDataSubmitted(
