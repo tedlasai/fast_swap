@@ -2,6 +2,7 @@ import 'package:fastswap/displayUserData_bloc/displayUserData.dart';
 import 'package:fastswap/search_bloc/search.dart';
 import 'package:fastswap/usersLib/src/models/user.dart';
 import 'package:fastswap/users_bloc/users.dart';
+import 'package:fastswap/widgets/generateQRCode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
@@ -26,6 +27,7 @@ class _HomeWidgetState extends State<HomeWidget> {
   String uid;
   String displayName;
   String twitter;
+  String usernameLowercase;
   List<User> usersMatched;
   User currentUser;
   String searchStateDecision;
@@ -38,6 +40,7 @@ class _HomeWidgetState extends State<HomeWidget> {
     usersMatched = [];
     currentUser = null;
     twitter = "";
+    usernameLowercase = "";
     searchStateDecision = "EMPTY";
   }
 
@@ -62,6 +65,7 @@ class _HomeWidgetState extends State<HomeWidget> {
         if (state is UserInfoLoaded) {
           print(state.userInfo);
           currentUser = state.userInfo;
+          usernameLowercase = currentUser.usernameLowercase;
           twitter = currentUser.twitter;
         }
         return Column(
@@ -72,8 +76,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                 context: context,
                 valueBuilder: (BuildContext context) => searchStateDecision,
                 caseBuilders: {
-                  'EMPTY': (BuildContext context) => Text(
-                      'EDIT INFO PAGE Welcome $displayName! UserID: $uid Twitter: $twitter'),
+                  'EMPTY': (BuildContext context) => Expanded(
+                      child: GenerateQRCode(qrString: usernameLowercase)),
                   'NO MATCHES': (BuildContext context) =>
                       Text('There are no matches'),
                 },
