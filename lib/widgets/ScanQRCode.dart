@@ -30,19 +30,20 @@ class ScanQRCodeState extends State<ScanQRCode> {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       onPressed: () {
-        scan();
+        scan(context);
       },
       child: Icon(Icons.photo_camera),
       backgroundColor: Colors.blue,
     );
   }
 
-  Future scan() async {
+  Future scan(BuildContext context) async {
     try {
       String barcode = await BarcodeScanner.scan();
       setState(() => this.barcode = barcode);
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.CameraAccessDenied) {
+        showAlertDialog(context);
         setState(() {
           this.barcode = 'The user did not grant the camera permission!';
         });
@@ -55,5 +56,32 @@ class ScanQRCodeState extends State<ScanQRCode> {
     } catch (e) {
       setState(() => this.barcode = 'Unknown error: $e');
     }
+  }
+
+  showAlertDialog(BuildContext context) {
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("No Camera Permissions!"),
+      content: Text("Please enable camera to scan your friends' QR codes."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }

@@ -23,4 +23,16 @@ class DisplayUserDataUpdated extends DisplayUserDataEvent {
   String toString() => 'DisplayUserDataUpdated { query :$data }';
 }
 
+class DisplayUserDataUpdatedByLink extends DisplayUserDataEvent {
+  final String username;
+
+  const DisplayUserDataUpdatedByLink({@required this.username});
+
+  @override
+  List<Object> get props => [username];
+
+  @override
+  String toString() => 'DisplayUserDataUpdatedByLink { username :$username }';
+}
+
 class DisplayUserDataClear extends DisplayUserDataEvent {}

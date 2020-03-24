@@ -10,6 +10,12 @@ import 'package:fastswap/usersLib/users_repository.dart';
 
 class DisplayUserDataBloc
     extends Bloc<DisplayUserDataEvent, DisplayUserDataState> {
+  UsersRepository _usersRepository;
+
+  DisplayUserDataBloc({@required UsersRepository usersRepository})
+      : assert(usersRepository != null),
+        _usersRepository = usersRepository;
+
   @override
   DisplayUserDataState get initialState => NoUserData();
 
@@ -21,6 +27,8 @@ class DisplayUserDataBloc
       yield* _mapDisplayUserDataStartedToState();
     } else if (event is DisplayUserDataUpdated) {
       yield* _mapDisplayUserDataUpdatedToState(event);
+    } else if (event is DisplayUserDataUpdatedByLink) {
+      yield* _mapDisplayUserDataUpdatedByLink(event);
     } else if (event is DisplayUserDataClear) {
       yield* _mapDisplayUserDataClearToState();
     }
@@ -33,6 +41,11 @@ class DisplayUserDataBloc
   Stream<DisplayUserDataState> _mapDisplayUserDataUpdatedToState(
       DisplayUserDataUpdated event) async* {
     yield HasUserData(event.data);
+  }
+
+  Stream<DisplayUserDataState> _mapDisplayUserDataUpdatedByLink(
+      DisplayUserDataUpdatedByLink event) async* {
+    //yield HasUserData(event.data);
   }
 
   Stream<DisplayUserDataState> _mapDisplayUserDataClearToState() async* {

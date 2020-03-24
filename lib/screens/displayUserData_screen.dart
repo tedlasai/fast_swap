@@ -53,12 +53,11 @@ class DisplayUserDataScreen extends StatelessWidget {
           children: <Widget>[
             checkIfFieldExists(phoneNumber)
                 ? CustomTileWidget(
-                    assetPath: "assets/phone.png", url: "tel:+1-555-010-999")
+                    assetPath: "assets/phone.png", url: "tel:$phoneNumber")
                 : null,
             checkIfFieldExists(email)
                 ? CustomTileWidget(
-                    assetPath: "assets/email.png",
-                    url: "mailto:tedlasai@gmail.com")
+                    assetPath: "assets/email.png", url: "mailto:$email")
                 : null,
             checkIfFieldExists(snapchat)
                 ? CustomTileWidget(

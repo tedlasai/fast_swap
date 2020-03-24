@@ -64,7 +64,9 @@ class App extends StatelessWidget {
                   ..add(UserGetDataUninitialized()),
           ),
           BlocProvider<TabBloc>(create: (context) => TabBloc()),
-          BlocProvider<QrCodeGenBloc>(create: (context) => QrCodeGenBloc()),
+          BlocProvider<QrCodeGenBloc>(
+              create: (context) =>
+                  QrCodeGenBloc(usersRepository: _firebaseUsersRepository)),
           BlocProvider<SearchBloc>(
               create: (context) =>
                   SearchBloc(usersRepository: _firebaseUsersRepository)
