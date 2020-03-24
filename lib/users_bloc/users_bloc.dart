@@ -14,11 +14,13 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
         _usersRepository = usersRepository;
 
   @override
-  UsersState get initialState => UsersLoading();
+  UsersState get initialState => UsersNotLoaded();
 
   @override
   Stream<UsersState> mapEventToState(UsersEvent event) async* {
-    if (event is LoadUser) {
+    if (event is NoUser) {
+      yield* _mapNoUserToState(event);
+    } else if (event is LoadUser) {
       yield* _mapLoadUserToState(event);
     } else if (event is AddUser) {
       yield* _mapAddUserToState(event);
@@ -29,6 +31,10 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
     } else if (event is UsersInfoUpdated) {
       yield* _mapUserInfoUpdatedToState(event);
     }
+  }
+
+  Stream<UsersState> _mapNoUserToState(UsersEvent event) async* {
+    yield UsersNotLoaded();
   }
 
   Stream<UsersState> _mapLoadUserToState(LoadUser event) async* {

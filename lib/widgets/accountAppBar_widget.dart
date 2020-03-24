@@ -1,6 +1,8 @@
 import 'package:fastswap/authentication_bloc/authentication_bloc.dart';
 import 'package:fastswap/tab/app_tab.dart';
 import 'package:fastswap/tab/bloc/tab.dart';
+import 'package:fastswap/userGetData_bloc/bloc/bloc.dart';
+import 'package:fastswap/users_bloc/users.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fastswap/search_bloc/search.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +38,9 @@ class _CustomAccountAppBarState extends State<CustomAccountAppBar> {
           onPressed: () {
             BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
             BlocProvider.of<SearchBloc>(context).add(SearchClear());
+            BlocProvider.of<UserGetDataBloc>(context)
+                .add(UserGetDataUninitialized());
+            BlocProvider.of<UsersBloc>(context).add(NoUser());
             BlocProvider.of<TabBloc>(context).add(
                 UpdateTab(AppTab.home)); //reset to home next time you log in
           },

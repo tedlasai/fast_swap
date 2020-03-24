@@ -9,6 +9,11 @@ abstract class UsersEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class NoUser extends UsersEvent {
+  @override
+  String toString() => 'NoUser';
+}
+
 class LoadUser extends UsersEvent {
   final String uid;
 
