@@ -1,4 +1,5 @@
 import 'package:fastswap/displayUserData_bloc/displayUserData.dart';
+import 'package:fastswap/qrcodegen_bloc/qrcodegen.dart';
 import 'package:fastswap/search_bloc/search.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
@@ -63,6 +64,7 @@ class App extends StatelessWidget {
                   ..add(UserGetDataUninitialized()),
           ),
           BlocProvider<TabBloc>(create: (context) => TabBloc()),
+          BlocProvider<QrCodeGenBloc>(create: (context) => QrCodeGenBloc()),
           BlocProvider<SearchBloc>(
               create: (context) =>
                   SearchBloc(usersRepository: _firebaseUsersRepository)
@@ -75,7 +77,7 @@ class App extends StatelessWidget {
                 usersRepository: _firebaseUsersRepository,
               );
             },
-          )
+          ),
         ],
         child: GestureDetector(
             onTap: () {

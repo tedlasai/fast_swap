@@ -1,5 +1,7 @@
 import 'package:esys_flutter_share/esys_flutter_share.dart';
+import 'package:fastswap/qrcodegen_bloc/qrcodegen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_share_file/flutter_share_file.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter/services.dart';
@@ -40,7 +42,42 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
 
   @override
   Widget build(BuildContext context) {
-    return _contentWidget();
+    return BlocBuilder<QrCodeGenBloc, QrCodeGenState>(
+        builder: (context, state) {
+      if (state is HasQrString) {
+        qrString = state.qrString;
+      }
+      final bodyHeight = MediaQuery.of(context).size.height -
+          MediaQuery.of(context).viewInsets.bottom;
+      return SingleChildScrollView(
+          child: Container(
+        color: const Color(0xFFFFFFFF),
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(50),
+            ),
+            Text("Your Personal QR Code! Share it with others!"),
+            Padding(
+              padding: EdgeInsets.all(20),
+            ),
+            Center(
+              child: RepaintBoundary(
+                key: globalKey,
+                child: QrImage(
+                  data: qrString,
+                  size: 0.4 * bodyHeight,
+                ),
+              ),
+            ),
+            IconButton(
+              icon: Icon(Icons.share),
+              onPressed: _captureAndSharePng,
+            ),
+          ],
+        ),
+      ));
+    });
   }
 
   Future<void> _captureAndSharePng() async {
@@ -51,48 +88,15 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
       ByteData byteData = await image.toByteData(format: ImageByteFormat.png);
       Uint8List pngBytes = byteData.buffer.asUint8List();
 
-      Directory tempDir = await getApplicationDocumentsDirectory();
+      Directory tempDir = await getTemporaryDirectory();
       final file = await new File('${tempDir.path}/image.png');
       await file.writeAsBytes(pngBytes);
 
       //FlutterShareFile.shareImage(tempDir.path, 'image.png');
-      await Share.file('esys image', 'YourFastSwapQR.png',
-          byteData.buffer.asUint8List(), 'image/png');
+      await Share.file(
+          'esys image', 'YourFastSwapQR.png', pngBytes, 'image/png');
     } catch (e) {
       print(e.toString());
     }
-  }
-
-  Widget _contentWidget() {
-    final bodyHeight = MediaQuery.of(context).size.height -
-        MediaQuery.of(context).viewInsets.bottom;
-    return SingleChildScrollView(
-        child: Container(
-      color: const Color(0xFFFFFFFF),
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.all(50),
-          ),
-          Text("Your Personal QR Code! Share it with others!"),
-          Padding(
-            padding: EdgeInsets.all(20),
-          ),
-          Center(
-            child: RepaintBoundary(
-              key: globalKey,
-              child: QrImage(
-                data: qrString,
-                size: 0.4 * bodyHeight,
-              ),
-            ),
-          ),
-          IconButton(
-            icon: Icon(Icons.share),
-            onPressed: _captureAndSharePng,
-          ),
-        ],
-      ),
-    ));
   }
 }

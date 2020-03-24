@@ -1,4 +1,6 @@
 import 'package:fastswap/authentication_bloc/authentication_bloc.dart';
+import 'package:fastswap/qrcodegen_bloc/qrcodegen.dart';
+
 import 'package:fastswap/tab/app_tab.dart';
 import 'package:fastswap/tab/bloc/tab.dart';
 import 'package:fastswap/userGetData_bloc/bloc/bloc.dart';
@@ -41,6 +43,7 @@ class _CustomAccountAppBarState extends State<CustomAccountAppBar> {
             BlocProvider.of<UserGetDataBloc>(context)
                 .add(UserGetDataUninitialized());
             BlocProvider.of<UsersBloc>(context).add(NoUser());
+            BlocProvider.of<QrCodeGenBloc>(context).add(QrCodeGenClear());
             BlocProvider.of<TabBloc>(context).add(
                 UpdateTab(AppTab.home)); //reset to home next time you log in
           },

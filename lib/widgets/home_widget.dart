@@ -1,4 +1,5 @@
 import 'package:fastswap/displayUserData_bloc/displayUserData.dart';
+import 'package:fastswap/qrcodegen_bloc/qrcodegen.dart';
 import 'package:fastswap/search_bloc/search.dart';
 import 'package:fastswap/usersLib/src/models/user.dart';
 import 'package:fastswap/users_bloc/users.dart';
@@ -64,9 +65,12 @@ class _HomeWidgetState extends State<HomeWidget> {
 
         if (state is UserInfoLoaded) {
           print(state.userInfo);
+          print("USER INFO LOADED $usernameLowercase");
           currentUser = state.userInfo;
           usernameLowercase = currentUser.usernameLowercase;
           twitter = currentUser.twitter;
+          BlocProvider.of<QrCodeGenBloc>(context)
+              .add(QrCodeGenUpdate(qrString: usernameLowercase));
         }
         return Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
