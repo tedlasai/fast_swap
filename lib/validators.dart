@@ -39,7 +39,7 @@ class Validators {
     } else if (_username2AdjacentSpecialCharsRegExp(username)) {
       return "Username can't have 2 adjacent underscores.";
     } else if (!_usernameAlphanumericRegExp.hasMatch(username)) {
-      return "Username can have letters, numbers, underscores.";
+      return "Only letters, numbers, underscores.";
     } else if (!_usernameLengthCheckRegExp.hasMatch(username)) {
       return "Username Length must be 8-20 characters.";
     } else
@@ -87,7 +87,7 @@ class Validators {
     } else if (_username2AdjacentSpecialCharsRegExp(handle)) {
       return "Handle can't have 2 adjacent underscores.";
     } else if (!_handleMatchRegExp.hasMatch(handle)) {
-      return "Handle can have letters, numbers, underscores.";
+      return "Only letters, numbers, underscores.";
     } else
       return "VALID";
   }

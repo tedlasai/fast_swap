@@ -32,17 +32,19 @@ class UserGetDataChanged extends UserGetDataEvent {
   final String facebook;
   final String instagram;
   final String twitter;
+  final bool usernameCreated;
 
   const UserGetDataChanged({this.username, this.email, this.phoneNumber,
-    this.snapchat, this.facebook, this.instagram, this.twitter});
+    this.snapchat, this.facebook, this.instagram, this.twitter, this.usernameCreated});
 
   @override
-  List<Object> get props => [username, email, phoneNumber, snapchat, facebook, instagram, twitter];
+  List<Object> get props => [username, email, phoneNumber, snapchat, facebook, instagram, twitter, usernameCreated];
 
   @override
   String toString() =>
       'DataChanged { username :$username, email :$email, phone number :$phoneNumber,'
-          'snapchat :$snapchat, facebook :$facebook, instagram :$instagram, twitter: $twitter }';
+          'snapchat :$snapchat, facebook :$facebook, instagram :$instagram, twitter: $twitter,'
+          'usernameCreated: $usernameCreated }';
 }
 
 class UserGetDataSubmitted extends UserGetDataEvent {
@@ -54,6 +56,7 @@ class UserGetDataSubmitted extends UserGetDataEvent {
   final String instagram;
   final String twitter;
   final String displayName;
+  final bool usernameCreated;
   final String uid;
 
   const UserGetDataSubmitted({@required this.uid,
@@ -64,17 +67,18 @@ class UserGetDataSubmitted extends UserGetDataEvent {
     @required this.snapchat,
     @required this.facebook,
     @required this.instagram,
-    @required this.twitter});
+    @required this.twitter,
+    @required this.usernameCreated});
 
   @override
   List<Object> get props => [username, email, phoneNumber, snapchat, facebook,
-    instagram, twitter, uid, displayName];
+    instagram, twitter, uid, displayName, usernameCreated];
 
   @override
   String toString() {
     return 'Submitted { displayName: $displayName, username: $username, uid: $uid,'
         'email: $email, phone number: $phoneNumber, snapchat: $snapchat, facebook: $facebook, '
-        'instagram: $instagram, twitter: $twitter}';
+        'instagram: $instagram, twitter: $twitter, usernameCreated: $usernameCreated}';
   }
 }
 
