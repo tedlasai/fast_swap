@@ -15,7 +15,7 @@ import 'package:fastswap/screens/emptyloading_screen.dart';
 import 'package:fastswap/screens/loadinghome_screen.dart';
 import 'package:fastswap/screens/splash_screen.dart';
 
-class UserGetDataScreen extends StatelessWidget {
+class UserGetDataScreen extends StatefulWidget {
   final String _uid;
   final String _displayName;
   final FirebaseUsersRepository _firebaseUsersRepository;
@@ -33,42 +33,49 @@ class UserGetDataScreen extends StatelessWidget {
         _firebaseUsersRepository = firebaseUsersRepository,
         super(key: key) {}
 
+  State<UserGetDataScreen> createState() => _UserGetDataScreenState();
+}
+
+class _UserGetDataScreenState extends State<UserGetDataScreen> {
+  String uid;
+  String displayName;
+  FirebaseUsersRepository firebaseUsersRepository;
+
+  @override
+  void initState() {
+    super.initState();
+    uid = widget._uid;
+    displayName = widget._displayName;
+    firebaseUsersRepository = widget._firebaseUsersRepository;
+    BlocProvider.of<UsersBloc>(context).add(LoadUser(uid));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-        providers: [
-          BlocProvider<UsersBloc>(
-            create: (context) {
-              return UsersBloc(
-                usersRepository: _firebaseUsersRepository,
-              )..add(LoadUser(_uid));
-            },
-          )
-        ],
-        child: Scaffold(
-          body: BlocBuilder<UserGetDataBloc, UserGetDataState>(
-            builder: (context, state) {
-              if (state.hasLoadedUser) {
-                if (state.hasUserData) {
-                  return HomeScreen(
-                    displayName: _displayName,
-                    uid: _uid,
-                  );
-                } else {
-                  return UserGetDataForm(
-                    uid: _uid,
-                    displayName: _displayName,
-                  );
-                }
-              } else if (state.isFailure) {
-                return LoadingHomeScreen();
-              } else if (state.isSuccess) {
-                return LoadingHomeScreen();
-              } else {
-                return EmptyLoadingScreen();
-              }
-            },
-          ),
-        ));
+    return Scaffold(
+      body: BlocBuilder<UserGetDataBloc, UserGetDataState>(
+        builder: (context, state) {
+          if (state.hasLoadedUser) {
+            if (state.hasUserData) {
+              return HomeScreen(
+                displayName: displayName,
+                uid: uid,
+              );
+            } else {
+              return UserGetDataForm(
+                uid: uid,
+                displayName: displayName,
+              );
+            }
+          } else if (state.isFailure) {
+            return LoadingHomeScreen();
+          } else if (state.isSuccess) {
+            return LoadingHomeScreen();
+          } else {
+            return EmptyLoadingScreen();
+          }
+        },
+      ),
+    );
   }
 }

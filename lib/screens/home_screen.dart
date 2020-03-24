@@ -1,7 +1,9 @@
 import 'package:fastswap/displayUserData_bloc/displayUserData.dart';
+import 'package:fastswap/userGetData_bloc/userGetData_form.dart';
 import 'package:fastswap/widgets/ScanQRCode.dart';
 import 'package:fastswap/widgets/accountAppBar_widget.dart';
 import 'package:fastswap/widgets/account_widget.dart';
+import 'package:fastswap/widgets/customGetDataForm_widget.dart';
 import 'package:fastswap/widgets/customSearchBar_widget.dart';
 import 'package:fastswap/widgets/home_widget.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     : CustomAccountAppBar(),
                 body: activeTab == AppTab.home
                     ? HomeWidget(uid: uid, displayName: displayName)
-                    : AccountWidget(uid: uid, displayName: displayName),
+                    : BuildColumnGetData(uid: uid, displayName: displayName),
                 bottomNavigationBar: TabSelector(
                   activeTab: activeTab,
                   onTabSelected: (tab) =>

@@ -8,8 +8,6 @@ abstract class UsersState extends Equatable {
   List<Object> get props => [];
 }
 
-class UsersLoading extends UsersState {}
-
 class UserInfoLoaded extends UsersState {
   final String uid;
   final User userInfo;

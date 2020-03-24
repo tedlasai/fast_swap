@@ -68,7 +68,14 @@ class App extends StatelessWidget {
                   SearchBloc(usersRepository: _firebaseUsersRepository)
                     ..add(SearchStarted())),
           BlocProvider<DisplayUserDataBloc>(
-              create: (context) => DisplayUserDataBloc())
+              create: (context) => DisplayUserDataBloc()),
+          BlocProvider<UsersBloc>(
+            create: (context) {
+              return UsersBloc(
+                usersRepository: _firebaseUsersRepository,
+              );
+            },
+          )
         ],
         child: GestureDetector(
             onTap: () {

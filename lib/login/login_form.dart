@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fastswap/user_repository.dart';
 import 'package:fastswap/authentication_bloc/authentication_bloc.dart';
 import 'package:fastswap/login/login.dart';
+import 'package:fastswap/userGetData_bloc/bloc/bloc.dart';
 import 'package:fastswap/users_bloc/users.dart';
 
 class LoginForm extends StatefulWidget {
@@ -47,6 +48,8 @@ class _LoginFormState extends State<LoginForm> {
         }
         if (state.isSuccess) {
           BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn());
+          //update user
+       
         }
       },
       child: BlocBuilder<LoginBloc, LoginState>(

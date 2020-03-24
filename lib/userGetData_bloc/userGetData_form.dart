@@ -1,3 +1,4 @@
+import 'package:fastswap/users_bloc/users.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fastswap/user_repository.dart';
@@ -35,8 +36,7 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
 
   //final TextEditingController _passwordController = TextEditingController();
 
-  bool get isPopulated =>
-      _usernameController.text.isNotEmpty;
+  bool get isPopulated => _usernameController.text.isNotEmpty;
 
   bool isSubmitButtonEnabled(UserGetDataState state) {
     return state.isFormValid && isPopulated && !state.isSubmitting;
@@ -255,6 +255,11 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
           twitter: _twitterController.text,
           uid: uid,
           displayName: displayName),
+    );
+
+    //update user
+    BlocProvider.of<UsersBloc>(context).add(
+      LoadUser(uid),
     );
   }
 }

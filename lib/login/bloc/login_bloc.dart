@@ -47,6 +47,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         throw (e);
       }
     } catch (_) {
+      print(_);
       yield LoginState.failure();
     }
   }
