@@ -135,38 +135,39 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
                 reverse: true,
                 shrinkWrap: true,
                 children: <Widget>[
-                  !state.hasUserData ?
-                  TextFormField(
-                    controller: _usernameController,
-                    decoration: InputDecoration(
-                      icon: Icon(Icons.person),
-                      labelText: 'Username (required)',
-                    ),
-                    keyboardType: TextInputType.text,
-                    autovalidate: true,
-                    autocorrect: false,
-                    validator: (_) {
-                      return state.isUsernameValid != "VALID"
-                          ? 'Invalid Username'
-                          : null;
-                    },
-                  ) : TextFormField(
-                    controller: _usernameController,
-                    decoration: InputDecoration(
-                      icon: Icon(Icons.person),
-                      labelText: 'Username',
-                    ),
-                    keyboardType: TextInputType.text,
-                    style: new TextStyle(color: Colors.grey),
-                    autovalidate: true,
-                    autocorrect: false,
-                    enabled: false,
-                    validator: (_) {
-                      return state.isUsernameValid != "VALID"
-                          ? 'Invalid Username'
-                          : null;
-                    },
-                  ),
+                  !state.hasUserData
+                      ? TextFormField(
+                          controller: _usernameController,
+                          decoration: InputDecoration(
+                            icon: Icon(Icons.person),
+                            labelText: 'Username (required)',
+                          ),
+                          keyboardType: TextInputType.text,
+                          autovalidate: true,
+                          autocorrect: false,
+                          validator: (_) {
+                            return state.isUsernameValid != "VALID"
+                                ? 'Invalid Username'
+                                : null;
+                          },
+                        )
+                      : TextFormField(
+                          controller: _usernameController,
+                          decoration: InputDecoration(
+                            icon: Icon(Icons.person),
+                            labelText: 'Username',
+                          ),
+                          keyboardType: TextInputType.text,
+                          style: new TextStyle(color: Colors.grey),
+                          autovalidate: true,
+                          autocorrect: false,
+                          enabled: false,
+                          validator: (_) {
+                            return state.isUsernameValid != "VALID"
+                                ? 'Invalid Username'
+                                : null;
+                          },
+                        ),
                   TextFormField(
                     controller: _emailController,
                     decoration: InputDecoration(
@@ -319,6 +320,8 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
           displayName: displayName,
           usernameCreated: true),
     );
+
+    FocusScope.of(context).requestFocus(FocusNode()); //hide keyboard
 
     //update user
     BlocProvider.of<UsersBloc>(context).add(

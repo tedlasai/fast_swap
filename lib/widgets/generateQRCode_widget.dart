@@ -66,6 +66,7 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
                 key: globalKey,
                 child: QrImage(
                   data: qrString,
+                  embeddedImage: AssetImage('assets/fastswap_logo.JPG'),
                   size: 0.4 * bodyHeight,
                 ),
               ),
