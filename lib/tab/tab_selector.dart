@@ -29,7 +29,7 @@ class _TabSelector extends State<TabSelector> {
       items: AppTab.values.map((tab) {
         return BottomNavigationBarItem(
           icon: Icon(
-            tab == AppTab.home ? Icons.list : Icons.show_chart,
+            tab == AppTab.home ? Icons.home : Icons.account_circle,
           ),
           title: Text(
             tab == AppTab.home ? 'Home' : 'Account',

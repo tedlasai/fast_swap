@@ -171,7 +171,7 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
                   TextFormField(
                     controller: _emailController,
                     decoration: InputDecoration(
-                      icon: Icon(Icons.person),
+                      icon: Icon(Icons.email),
                       labelText: 'Email (optional)',
                     ),
                     keyboardType: TextInputType.emailAddress,
@@ -186,7 +186,7 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
                   TextFormField(
                     controller: _phoneNumberController,
                     decoration: InputDecoration(
-                      icon: Icon(Icons.person),
+                      icon: Icon(Icons.phone),
                       labelText: 'Phone Number (optional)',
                     ),
                     keyboardType: TextInputType.text,
@@ -201,8 +201,8 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
                   TextFormField(
                     controller: _snapchatController,
                     decoration: InputDecoration(
-                      icon: Icon(Icons.person),
-                      labelText: 'Snapchat (optional)',
+                      icon: Icon(Icons.link),
+                      labelText: 'Snapchat Username (optional)',
                     ),
                     keyboardType: TextInputType.text,
                     autovalidate: true,
@@ -216,8 +216,8 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
                   TextFormField(
                     controller: _facebookController,
                     decoration: InputDecoration(
-                      icon: Icon(Icons.person),
-                      labelText: 'Facebook (optional)',
+                      icon: Icon(Icons.link),
+                      labelText: 'Facebook Username (optional)',
                     ),
                     keyboardType: TextInputType.text,
                     autovalidate: true,
@@ -231,8 +231,8 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
                   TextFormField(
                     controller: _instagramController,
                     decoration: InputDecoration(
-                      icon: Icon(Icons.person),
-                      labelText: 'Instagram (optional)',
+                      icon: Icon(Icons.link),
+                      labelText: 'Instagram Username (optional)',
                     ),
                     keyboardType: TextInputType.text,
                     autovalidate: true,
@@ -246,8 +246,8 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
                   TextFormField(
                     controller: _twitterController,
                     decoration: InputDecoration(
-                      icon: Icon(Icons.person),
-                      labelText: 'Twitter (optional)',
+                      icon: Icon(Icons.link),
+                      labelText: 'Twitter Username (optional)',
                     ),
                     keyboardType: TextInputType.text,
                     autovalidate: true,
