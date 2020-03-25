@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fastswap/user_repository.dart';
 import 'package:fastswap/authentication_bloc/authentication_bloc.dart';
 import 'package:fastswap/login/login.dart';
+import 'package:fastswap/widgets/customLinkWidget.dart';
 import 'package:fastswap/userGetData_bloc/bloc/bloc.dart';
 import 'package:fastswap/users_bloc/users.dart';
 
@@ -69,7 +70,8 @@ class _LoginFormState extends State<LoginForm> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
                         GoogleLoginButton(),
-                        FacebookLoginButton()
+                        FacebookLoginButton(),
+                        CustomLinkWidget(name: "Privacy Policy", url: "https://google.com"),
                       ],
                     ),
                   ),
