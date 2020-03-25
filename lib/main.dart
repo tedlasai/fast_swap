@@ -4,7 +4,6 @@ import 'package:fastswap/internetConnectivity_bloc/internetConnectivity.dart';
 import 'package:fastswap/qrcodegen_bloc/qrcodegen.dart';
 import 'package:fastswap/search_bloc/search.dart';
 import 'package:fastswap/widgets/showAlertDialog.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

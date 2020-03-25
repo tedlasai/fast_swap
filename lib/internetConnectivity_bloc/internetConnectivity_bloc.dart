@@ -4,7 +4,6 @@ import 'package:connectivity/connectivity.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fastswap/internetConnectivity_bloc/internetConnectivity.dart';
 import 'package:fastswap/usersLib/src/entities/entities.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:meta/meta.dart';
 import 'package:fastswap/user_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
