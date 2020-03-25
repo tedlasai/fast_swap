@@ -1,6 +1,10 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:fastswap/displayUserData_bloc/displayUserData.dart';
+import 'package:fastswap/internetConnectivity_bloc/internetConnectivity.dart';
 import 'package:fastswap/qrcodegen_bloc/qrcodegen.dart';
 import 'package:fastswap/search_bloc/search.dart';
+import 'package:fastswap/widgets/showAlertDialog.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,26 +29,31 @@ void main() {
   final UserRepository userRepository = UserRepository();
   final FirebaseUsersRepository firebaseUsersRepository =
       FirebaseUsersRepository();
+
+  final Connectivity internetConnectivity = Connectivity();
   runApp(
     App(
-      userRepository: userRepository,
-      firebaseUsersRepository: firebaseUsersRepository,
-    ),
+        userRepository: userRepository,
+        firebaseUsersRepository: firebaseUsersRepository,
+        internetConnectivity: internetConnectivity),
   );
 }
 
 class App extends StatelessWidget {
   final UserRepository _userRepository;
   final FirebaseUsersRepository _firebaseUsersRepository;
+  final Connectivity _internetConnectivity;
 
   App(
       {Key key,
       @required UserRepository userRepository,
-      @required FirebaseUsersRepository firebaseUsersRepository})
+      @required FirebaseUsersRepository firebaseUsersRepository,
+      @required Connectivity internetConnectivity})
       : assert(userRepository != null),
         assert(firebaseUsersRepository != null),
         _firebaseUsersRepository = firebaseUsersRepository,
         _userRepository = userRepository,
+        _internetConnectivity = internetConnectivity,
         super(key: key);
 
   @override
@@ -79,6 +88,11 @@ class App extends StatelessWidget {
               );
             },
           ),
+          BlocProvider<InternetConnectivityBloc>(
+            create: (context) => InternetConnectivityBloc(
+                internetConnectivity: _internetConnectivity)
+              ..add(InternetConnectivityStarted()),
+          ),
         ],
         child: GestureDetector(
             onTap: () {
@@ -88,18 +102,33 @@ class App extends StatelessWidget {
               }
             },
             child: MaterialApp(
-                home: BlocListener<AuthenticationBloc, AuthenticationState>(
-              listener: (context, state) {
-                if (state is Unauthenticated) {
-                  BlocProvider.of<UserGetDataBloc>(context)
-                      .add(UserGetDataUninitialized());
-                } else if (state is Authenticated) {
-                  BlocProvider.of<UserGetDataBloc>(context)
-                      .add(UserGetDataStart(
-                    uid: state.uid,
-                  ));
-                }
-              },
+                home: MultiBlocListener(
+              listeners: [
+                BlocListener<AuthenticationBloc, AuthenticationState>(
+                    listener: (context, state) {
+                  if (state is Unauthenticated) {
+                    BlocProvider.of<UserGetDataBloc>(context)
+                        .add(UserGetDataUninitialized());
+                  } else if (state is Authenticated) {
+                    BlocProvider.of<UserGetDataBloc>(context)
+                        .add(UserGetDataStart(
+                      uid: state.uid,
+                    ));
+                  }
+                  /*if (internetConnectivityState is NoConnection) {
+                    showAlertDialog(context, "No Internet Connection",
+                        "Please Check your Internet Conenction");
+                  }*/
+                }),
+                BlocListener<InternetConnectivityBloc,
+                        InternetConnectivityState>(
+                    listener: (context, state) async {
+                  if (state is NoConnection || state is InternetUninitialized) {
+                    showAlertDialog(context, "No Internet Connection",
+                        "Please Check your Internet Conenction");
+                  }
+                })
+              ],
               child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
                 builder: (context, state) {
                   if (state is Unauthenticated) {

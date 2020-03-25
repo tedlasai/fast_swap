@@ -1,6 +1,7 @@
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:fastswap/displayUserData_bloc/displayUserData.dart';
+import 'package:fastswap/widgets/showAlertDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_share_file/flutter_share_file.dart';
@@ -55,32 +56,5 @@ class ScanQRCodeState extends State<ScanQRCode> {
             "Please enable camera to scan your friends' QR codes.");
       }
     } on FormatException {} catch (e) {}
-  }
-
-  showAlertDialog(BuildContext context, String title, String content) {
-    // set up the button
-    Widget okButton = FlatButton(
-      child: Text("OK"),
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    );
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text(title),
-      content: Text(content),
-      actions: [
-        okButton,
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
   }
 }
