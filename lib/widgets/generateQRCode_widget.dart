@@ -1,5 +1,6 @@
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:fastswap/qrcodegen_bloc/qrcodegen.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_share_file/flutter_share_file.dart';
@@ -49,6 +50,7 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
       }
       final bodyHeight = MediaQuery.of(context).size.height -
           MediaQuery.of(context).viewInsets.bottom;
+
       return SingleChildScrollView(
           child: Container(
         color: const Color(0xFFFFFFFF),
@@ -73,7 +75,7 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
             ),
             IconButton(
               icon: Icon(Icons.share),
-              onPressed: _captureAndSharePng,
+              onPressed: () => _captureAndSharePng(),
             ),
           ],
         ),
@@ -99,5 +101,37 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  Future<void> generateLink(String username) async {
+    final DynamicLinkParameters parameters = DynamicLinkParameters(
+      uriPrefix: 'https://fastswap.page.link',
+      link: Uri.parse("https://techsaico.com/$username"),
+      androidParameters: AndroidParameters(
+        packageName: 'com.saico.fastswap',
+        minimumVersion: 1,
+      ),
+      iosParameters: IosParameters(
+        bundleId: 'com.saico.fastswap',
+        minimumVersion: '1.0.0',
+        appStoreId: '1504397621',
+      ),
+      googleAnalyticsParameters: GoogleAnalyticsParameters(
+        campaign: 'example-promo',
+        medium: 'social',
+        source: 'orkut',
+      ),
+      itunesConnectAnalyticsParameters: ItunesConnectAnalyticsParameters(
+        providerToken: '123456',
+        campaignToken: 'example-promo',
+      ),
+      socialMetaTagParameters: SocialMetaTagParameters(
+        title: 'Example of a Dynamic Link',
+        description: 'This link works whether app is installed or not!',
+      ),
+    );
+
+    final Uri dynamicUrl = await parameters.buildUrl();
+    print(dynamicUrl);
   }
 }
