@@ -71,7 +71,7 @@ class _LoginFormState extends State<LoginForm> {
                       children: <Widget>[
                         GoogleLoginButton(),
                         FacebookLoginButton(),
-                        CustomLinkWidget(name: "Privacy Policy", url: "https://google.com"),
+                        CustomLinkWidget(name: "Privacy Policy", url: "https://techsaico.com/fastswap-privacy-policy/"),
                       ],
                     ),
                   ),
