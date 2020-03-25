@@ -62,7 +62,14 @@ class _LoginFormState extends State<LoginForm> {
                 children: <Widget>[
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 20),
-                    child: Image.asset('assets/flutter_logo.png', height: 200),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(500.0),
+                      child: Image.asset(
+                          'assets/fastswap_logo.JPG',
+                          height: 200,
+                          fit: BoxFit.fitHeight,
+                      ),
+                    )
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 20),
