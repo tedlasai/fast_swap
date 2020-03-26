@@ -39,7 +39,7 @@ class _LoginFormState extends State<LoginForm> {
                 content: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Email Already Exists! Login with Google Please!'),
+                    Text('Email Already Exists! Login with Google!'),
                     Icon(Icons.error)
                   ],
                 ),

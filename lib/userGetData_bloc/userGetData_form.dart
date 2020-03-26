@@ -1,4 +1,5 @@
 import 'package:fastswap/users_bloc/users.dart';
+import 'package:fastswap/widgets/showAlertDelayedDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fastswap/user_repository.dart';
@@ -265,7 +266,7 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
                       children: <Widget>[
                         SubmitButton(
                           onPressed: isSubmitButtonEnabled(state)
-                              ? _onFormSubmitted
+                              ? () => _onFormSubmitted(state.hasUserData)
                               : null,
                         )
                       ],
@@ -306,7 +307,7 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
     );
   }
 
-  void _onFormSubmitted() {
+  void _onFormSubmitted(bool hasUserData) {
     _UserGetDataBloc.add(
       UserGetDataSubmitted(
           username: _usernameController.text,
@@ -320,6 +321,11 @@ class _UserGetDataFormState extends State<UserGetDataForm> {
           displayName: displayName,
           usernameCreated: true),
     );
+
+    print("HAS LOADED USER");
+    if (hasUserData) {
+      showAlertDelayedDialog(context, "Data Submitted", "");
+    }
 
     FocusScope.of(context).requestFocus(FocusNode()); //hide keyboard
 
