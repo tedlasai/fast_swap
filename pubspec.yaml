@@ -11,7 +11,7 @@ description: Fast swap of contacts
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+1
+version: 1.0.1+1
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -25,6 +25,8 @@ dependencies:
   flutter_facebook_login: ^3.0.0
   google_sign_in: ^4.2.0
   path_provider: ^1.6.5
+  device_info: ^0.4.2+1
+  apple_sign_in: ^0.1.0
   barcode_scan: ^2.0.1
   qr_flutter: ^3.2.0
   firebase_auth: ^0.15.5+3

@@ -24,10 +24,9 @@ class UserGetDataScreen extends StatefulWidget {
   UserGetDataScreen(
       {Key key,
       @required String uid,
-      @required String displayName,
+      String displayName,
       @required FirebaseUsersRepository firebaseUsersRepository})
       : assert(uid != null),
-        assert(displayName != null),
         assert(firebaseUsersRepository != null),
         _uid = uid,
         _displayName = displayName,

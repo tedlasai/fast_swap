@@ -14,6 +14,8 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  bool notNull(Object o) => o != null;
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
@@ -39,7 +41,7 @@ class _LoginFormState extends State<LoginForm> {
                 content: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Email Already Exists! Login with Google!'),
+                    Text('Registered with Other Login Service!'),
                     Icon(Icons.error)
                   ],
                 ),
@@ -75,6 +77,7 @@ class _LoginFormState extends State<LoginForm> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
+                        state.supportsAppleSignIn ? AppleLoginButton() : null,
                         GoogleLoginButton(),
                         FacebookLoginButton(),
                         CustomLinkWidget(
@@ -82,7 +85,7 @@ class _LoginFormState extends State<LoginForm> {
                             url:
                                 "https://techsaico.com/fastswap-privacy-policy/",
                             color: Colors.grey),
-                      ],
+                      ].where(notNull).toList(),
                     ),
                   ),
                 ],

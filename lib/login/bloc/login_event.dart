@@ -8,9 +8,10 @@ abstract class LoginEvent extends Equatable {
   List<Object> get props => [];
 }
 
-
+class LoginInitialize extends LoginEvent {}
 
 class LoginWithGooglePressed extends LoginEvent {}
+
 class LoginwithFacebookPressed extends LoginEvent {}
 
-
+class LoginWithApplePressed extends LoginEvent {}

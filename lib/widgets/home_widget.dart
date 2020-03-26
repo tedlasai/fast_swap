@@ -17,7 +17,6 @@ class HomeWidget extends StatefulWidget {
 
   HomeWidget({Key key, @required displayName, @required uid})
       : assert(uid != null),
-        assert(displayName != null),
         _uid = uid,
         _displayName = displayName,
         super(key: key);
