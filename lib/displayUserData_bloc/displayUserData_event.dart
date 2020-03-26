@@ -25,14 +25,17 @@ class DisplayUserDataUpdated extends DisplayUserDataEvent {
 
 class DisplayUserDataUpdatedByLink extends DisplayUserDataEvent {
   final String link;
+  final bool deep; //deep link or dynamic
 
-  const DisplayUserDataUpdatedByLink({@required this.link});
+  const DisplayUserDataUpdatedByLink(
+      {@required this.link, @required this.deep});
 
   @override
-  List<Object> get props => [link];
+  List<Object> get props => [link, deep];
 
   @override
-  String toString() => 'DisplayUserDataUpdatedByLink { link :$link }';
+  String toString() =>
+      'DisplayUserDataUpdatedByDynamicLink { link :$link , deep:$deep}';
 }
 
 class DisplayUserDataClear extends DisplayUserDataEvent {}

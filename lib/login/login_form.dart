@@ -50,7 +50,7 @@ class _LoginFormState extends State<LoginForm> {
         if (state.isSuccess) {
           BlocProvider.of<AuthenticationBloc>(context).add(LoggedIn());
           //update user
-       
+
         }
       },
       child: BlocBuilder<LoginBloc, LoginState>(
@@ -61,16 +61,15 @@ class _LoginFormState extends State<LoginForm> {
               child: ListView(
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(500.0),
-                      child: Image.asset(
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(500.0),
+                        child: Image.asset(
                           'assets/fastswap_logo.JPG',
                           height: 200,
                           fit: BoxFit.fitHeight,
-                      ),
-                    )
-                  ),
+                        ),
+                      )),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 20),
                     child: Column(
@@ -78,7 +77,11 @@ class _LoginFormState extends State<LoginForm> {
                       children: <Widget>[
                         GoogleLoginButton(),
                         FacebookLoginButton(),
-                        CustomLinkWidget(name: "Privacy Policy", url: "https://techsaico.com/fastswap-privacy-policy/"),
+                        CustomLinkWidget(
+                            name: "Privacy Policy",
+                            url:
+                                "https://techsaico.com/fastswap-privacy-policy/",
+                            color: Colors.grey),
                       ],
                     ),
                   ),

@@ -46,7 +46,7 @@ class ScanQRCodeState extends State<ScanQRCode> {
       print("BARCODE $barcode");
       if (barcode != null && barcode != "") {
         BlocProvider.of<DisplayUserDataBloc>(context)
-            .add(DisplayUserDataUpdatedByLink(link: barcode));
+            .add(DisplayUserDataUpdatedByLink(link: barcode, deep: false));
       } else {
         showAlertDialog(context, "Invalid QR Code", "Try Another QR Code");
       }

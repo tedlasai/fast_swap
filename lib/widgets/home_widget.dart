@@ -4,6 +4,7 @@ import 'package:fastswap/search_bloc/search.dart';
 import 'package:fastswap/usersLib/src/models/user.dart';
 import 'package:fastswap/users_bloc/users.dart';
 import 'package:fastswap/widgets/generateQRCode_widget.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
@@ -69,6 +70,7 @@ class _HomeWidgetState extends State<HomeWidget> {
           currentUser = state.userInfo;
           usernameLowercase = currentUser.usernameLowercase;
           twitter = currentUser.twitter;
+
           BlocProvider.of<QrCodeGenBloc>(context)
               .add(QrCodeGenUpdate(qrString: usernameLowercase));
         }
@@ -80,8 +82,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                 context: context,
                 valueBuilder: (BuildContext context) => searchStateDecision,
                 caseBuilders: {
-                  'EMPTY': (BuildContext context) => Expanded(
-                      child: GenerateQRCode(qrString: usernameLowercase)),
+                  'EMPTY': (BuildContext context) =>
+                      Expanded(child: GenerateQRCode()),
                   'NO MATCHES': (BuildContext context) =>
                       Text('There are no matches'),
                 },

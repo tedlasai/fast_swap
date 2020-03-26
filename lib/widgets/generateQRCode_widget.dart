@@ -13,15 +13,9 @@ import 'dart:io';
 import 'package:flutter/rendering.dart';
 import 'package:path_provider/path_provider.dart';
 
+import 'customLinkWidget.dart';
+
 class GenerateQRCode extends StatefulWidget {
-  final String _qrString;
-
-  @override
-  GenerateQRCode({Key key, @required qrString})
-      : assert(qrString != null),
-        _qrString = qrString,
-        super(key: key);
-
   State<StatefulWidget> createState() => GenerateQRCodeState();
 }
 
@@ -31,14 +25,16 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
   static const double _topSectionHeight = 50.0;
 
   GlobalKey globalKey = new GlobalKey();
-  String qrString = "Hello from this QR";
+  String shortLink;
+  String dynamicLink;
   String _inputErrorText;
   final TextEditingController _textController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    qrString = widget._qrString;
+    shortLink = "";
+    dynamicLink = "";
   }
 
   @override
@@ -46,7 +42,8 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
     return BlocBuilder<QrCodeGenBloc, QrCodeGenState>(
         builder: (context, state) {
       if (state is HasQrString) {
-        qrString = state.qrString;
+        shortLink = state.shortLink;
+        dynamicLink = state.dynamicLink;
       }
       final bodyHeight = MediaQuery.of(context).size.height -
           MediaQuery.of(context).viewInsets.bottom;
@@ -57,25 +54,42 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
         child: Column(
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.all(50),
+              padding: EdgeInsets.all(30),
             ),
             Text("Your Personal QR Code! Share it with others!"),
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: EdgeInsets.all(10),
+            ),
+            Center(
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                  IconButton(
+                    icon: Icon(
+                      Icons.photo,
+                      size: 40,
+                    ),
+                    onPressed: () => _captureAndSharePng(),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(10),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.link, size: 40),
+                    onPressed: () => _captureAndShareLink(),
+                  )
+                ])),
+            Padding(
+              padding: EdgeInsets.all(10),
             ),
             Center(
               child: RepaintBoundary(
                 key: globalKey,
                 child: QrImage(
-                  data: qrString,
-                  embeddedImage: AssetImage('assets/fastswap_logo.JPG'),
+                  data: dynamicLink,
                   size: 0.4 * bodyHeight,
                 ),
               ),
-            ),
-            IconButton(
-              icon: Icon(Icons.share),
-              onPressed: () => _captureAndSharePng(),
             ),
           ],
         ),
@@ -103,35 +117,12 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
     }
   }
 
-  Future<void> generateLink(String username) async {
-    final DynamicLinkParameters parameters = DynamicLinkParameters(
-      uriPrefix: 'https://fastswap.page.link',
-      link: Uri.parse("https://techsaico.com/$username"),
-      androidParameters: AndroidParameters(
-        packageName: 'com.saico.fastswap',
-        minimumVersion: 1,
-      ),
-      iosParameters: IosParameters(
-        bundleId: 'com.saico.fastswap',
-        minimumVersion: '1.0.0',
-        appStoreId: '1504397621',
-      ),
-      googleAnalyticsParameters: GoogleAnalyticsParameters(
-        campaign: 'example-promo',
-        medium: 'social',
-        source: 'orkut',
-      ),
-      itunesConnectAnalyticsParameters: ItunesConnectAnalyticsParameters(
-        providerToken: '123456',
-        campaignToken: 'example-promo',
-      ),
-      socialMetaTagParameters: SocialMetaTagParameters(
-        title: 'Example of a Dynamic Link',
-        description: 'This link works whether app is installed or not!',
-      ),
-    );
-
-    final Uri dynamicUrl = await parameters.buildUrl();
-    print(dynamicUrl);
+  Future<void> _captureAndShareLink() async {
+    try {
+      //FlutterShareFile.shareImage(tempDir.path, 'image.png');
+      await Share.text("Your Link", shortLink, 'text/plain');
+    } catch (e) {
+      print(e.toString());
+    }
   }
 }
