@@ -79,7 +79,7 @@ class _LoginFormState extends State<LoginForm> {
                       children: <Widget>[
                         state.supportsAppleSignIn ? AppleLoginButton() : null,
                         GoogleLoginButton(),
-                        FacebookLoginButton(),
+                        // FacebookLoginButton(),
                         CustomLinkWidget(
                             name: "Privacy Policy",
                             url:
