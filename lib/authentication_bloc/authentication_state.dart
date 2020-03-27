@@ -13,7 +13,7 @@ class Authenticated extends AuthenticationState {
   final String uid;
   final String displayName;
 
-  const Authenticated(this.uid, this.displayName);
+  const Authenticated(this.displayName, this.uid);
 
   @override
   List<Object> get props => [uid, displayName];

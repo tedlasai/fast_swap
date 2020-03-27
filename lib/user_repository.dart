@@ -39,21 +39,33 @@ class UserRepository {
       AppleIdRequest(requestedScopes: [Scope.email, Scope.fullName])
     ]);
 
-    final AppleIdCredential appleIdCredential = result.credential;
+    switch (result.status) {
+      case AuthorizationStatus.authorized:
+        final AppleIdCredential appleIdCredential = result.credential;
+        OAuthProvider oAuthProvider =
+            new OAuthProvider(providerId: "apple.com");
+        final AuthCredential credential = oAuthProvider.getCredential(
+          idToken: String.fromCharCodes(appleIdCredential.identityToken),
+          accessToken:
+              String.fromCharCodes(appleIdCredential.authorizationCode),
+        );
+        await _firebaseAuth.signInWithCredential(credential);
 
-    OAuthProvider oAuthProvider = new OAuthProvider(providerId: "apple.com");
-    final AuthCredential credential = oAuthProvider.getCredential(
-      idToken: String.fromCharCodes(appleIdCredential.identityToken),
-      accessToken: String.fromCharCodes(appleIdCredential.authorizationCode),
-    );
+        await _firebaseAuth.currentUser().then((val) async {
+          UserUpdateInfo updateUser = UserUpdateInfo();
+          updateUser.displayName =
+              "${appleIdCredential.fullName.givenName} ${appleIdCredential.fullName.familyName}";
+          await val.updateProfile(updateUser);
+        });
+        break;
+      case AuthorizationStatus.cancelled:
+        // TODO: Handle this case.
+        break;
+      case AuthorizationStatus.error:
+        // TODO: Handle this case.
+        break;
+    }
 
-    _firebaseAuth.currentUser().then((val) async {
-      UserUpdateInfo updateUser = UserUpdateInfo();
-      updateUser.displayName =
-          "${appleIdCredential.fullName.givenName} ${appleIdCredential.fullName.familyName}";
-      await val.updateProfile(updateUser);
-    });
-    await _firebaseAuth.signInWithCredential(credential);
     return _firebaseAuth.currentUser();
   }
 
