@@ -92,13 +92,16 @@
 	<false/>
 	<key>ITSAppUsesNonExemptEncryption</key>
     <false/>
-	<key>NSPhotoLibraryAddUsageDescription</key> <string>Allow the user to save their custom QR code to their images.</string>
-	<key>NSLocationAlwaysUsageDescription</key> 
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>We don't use location.</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>We don't use location.</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>We don't user location.</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Allow the user to save their custom QR code to their images.</string>
 
-    <string>We don't use Location!</string> 
 
-    <key>NSLocationWhenInUseUsageDescription</key> 
-
-    <string>We don't use Location!</string>
 </dict>
 </plist>
+
