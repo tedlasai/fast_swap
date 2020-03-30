@@ -2,6 +2,7 @@ import 'package:fastswap/displayUserData_bloc/displayUserData.dart';
 import 'package:fastswap/tab/app_tab.dart';
 import 'package:fastswap/tab/bloc/tab.dart';
 import 'package:fastswap/usersLib/src/models/user.dart';
+import 'package:fastswap/widgets/customAddContact_widget.dart';
 import 'package:fastswap/widgets/customTiles_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -51,13 +52,9 @@ class DisplayUserDataScreen extends StatelessWidget {
           mainAxisSpacing: 10,
           crossAxisCount: 2,
           children: <Widget>[
-            checkIfFieldExists(phoneNumber)
-                ? CustomTileWidget(
-                    assetPath: "assets/phone.png", url: "tel:$phoneNumber")
-                : null,
-            checkIfFieldExists(email)
-                ? CustomTileWidget(
-                    assetPath: "assets/email.png", url: "mailto:$email")
+            checkIfFieldExists(phoneNumber) || checkIfFieldExists(email)
+                ? CustomAddContactWidget(
+                email: email, phoneNumber: phoneNumber, displayName: displayname)
                 : null,
             checkIfFieldExists(snapchat)
                 ? CustomTileWidget(
