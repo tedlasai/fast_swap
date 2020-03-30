@@ -7,7 +7,7 @@ class CustomAddContactWidget extends StatefulWidget {
   final String _phoneNumber;
 
   CustomAddContactWidget({Key key, email, phoneNumber, @required displayName})
-      :assert(displayName != null),
+      : assert(displayName != null),
         _email = email,
         _phoneNumber = phoneNumber,
         _displayName = displayName,
@@ -45,10 +45,17 @@ class _CustomAddContactState extends State<CustomAddContactWidget> {
   }
 
   _addContact() async {
-    Contact newContact = Contact();
-    newContact.displayName = displayName;
-    if(email != null) newContact.emails = [Item(label: "home", value: email)];
-    if(phoneNumber != null) newContact.phones = [Item(label: "home", value: phoneNumber)];
-    await ContactsService.addContact(newContact);
+    try {
+      Contact newContact = Contact();
+      List<String> words = displayName.split(' ');
+      newContact.givenName = words[0];
+      newContact.familyName = words[1];
+      print(newContact.familyName);
+      if (email != null)
+        newContact.emails = [Item(label: "home", value: email)];
+      if (phoneNumber != null)
+        newContact.phones = [Item(label: "home", value: phoneNumber)];
+      await ContactsService.addContact(newContact);
+    } catch (_) {}
   }
 }
