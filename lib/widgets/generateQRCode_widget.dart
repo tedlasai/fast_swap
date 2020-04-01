@@ -104,7 +104,13 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
       ByteData byteData = await image.toByteData(format: ImageByteFormat.png);
       Uint8List pngBytes = byteData.buffer.asUint8List();
 
-      Directory tempDir = await getExternalStorageDirectory();
+      Directory tempDir;
+      if (Platform.isIOS) {
+        tempDir = await getApplicationDocumentsDirectory();
+      } else {
+        //android
+        tempDir = await getExternalStorageDirectory();
+      }
       final file = await new File('${tempDir.path}/YourFastSwapQR.png');
       await file.writeAsBytes(pngBytes);
 
