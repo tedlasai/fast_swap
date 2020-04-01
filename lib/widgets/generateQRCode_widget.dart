@@ -1,9 +1,8 @@
-import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:fastswap/qrcodegen_bloc/qrcodegen.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_share_file/flutter_share_file.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
@@ -105,13 +104,16 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
       ByteData byteData = await image.toByteData(format: ImageByteFormat.png);
       Uint8List pngBytes = byteData.buffer.asUint8List();
 
-      Directory tempDir = await getTemporaryDirectory();
-      final file = await new File('${tempDir.path}/image.png');
+      Directory tempDir = await getExternalStorageDirectory();
+      final file = await new File('${tempDir.path}/YourFastSwapQR.png');
       await file.writeAsBytes(pngBytes);
 
       //FlutterShareFile.shareImage(tempDir.path, 'image.png');
-      await Share.file(
-          'esys image', 'YourFastSwapQR.png', pngBytes, 'image/png');
+
+      await FlutterShare.shareFile(
+        title: 'YourFastSwapQR',
+        filePath: '${tempDir.path}/YourFastSwapQR.png',
+      );
     } catch (e) {
       print(e.toString());
     }
@@ -120,7 +122,8 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
   Future<void> _captureAndShareLink() async {
     try {
       //FlutterShareFile.shareImage(tempDir.path, 'image.png');
-      await Share.text("Your Link", shortLink, 'text/plain');
+      //await Share.text("Your Link", shortLink, 'text/plain');
+      await FlutterShare.share(title: 'Your FastSwap Link', linkUrl: shortLink);
     } catch (e) {
       print(e.toString());
     }

@@ -1,10 +1,8 @@
 import 'package:barcode_scan/barcode_scan.dart';
-import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:fastswap/displayUserData_bloc/displayUserData.dart';
 import 'package:fastswap/widgets/showAlertDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_share_file/flutter_share_file.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
