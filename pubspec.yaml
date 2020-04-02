@@ -30,7 +30,10 @@ dependencies:
   barcode_scan: ^2.0.1
   qr_flutter: ^3.2.0
   firebase_auth: ^0.15.5+3
-  flutter_share: 1.0.2+1
+  flutter_share:
+    git:
+      url: https://github.com/neokree/flutter_share.git
+      ref: master
   bloc: ^3.0.0
   connectivity: 0.4.8+2
   flutter_bloc: ^3.2.0
