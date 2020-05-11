@@ -25,14 +25,17 @@ class DisplayUserDataUpdated extends DisplayUserDataEvent {
 
 class DisplayUserDataUpdatedByLink extends DisplayUserDataEvent {
   final String link;
+  final bool shortLink;
 
-  const DisplayUserDataUpdatedByLink({@required this.link});
+  const DisplayUserDataUpdatedByLink(
+      {@required this.link, @required this.shortLink});
 
   @override
-  List<Object> get props => [link];
+  List<Object> get props => [link, shortLink];
 
   @override
-  String toString() => 'DisplayUserDataUpdatedByLink { link :$link}';
+  String toString() =>
+      'DisplayUserDataUpdatedByLink { link :$link, shortLink: $shortLink}';
 }
 
 class DisplayUserDataClear extends DisplayUserDataEvent {}

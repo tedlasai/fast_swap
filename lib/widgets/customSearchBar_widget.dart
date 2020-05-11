@@ -26,7 +26,6 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
     print("in init state");
     super.initState();
     textEmpty = true;
-    print("AFTER");
 
     queryController.addListener(_updateQuery);
   }

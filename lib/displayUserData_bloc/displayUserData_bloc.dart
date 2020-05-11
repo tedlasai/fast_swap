@@ -25,18 +25,18 @@ class DisplayUserDataBloc
     final Uri deepLink = data?.link;
     print(deepLink);
     if (deepLink != null) {
-      add(DisplayUserDataUpdatedByLink(link: deepLink.toString()));
+      add(DisplayUserDataUpdatedByLink(
+          link: deepLink.toString(), shortLink: false));
     }
     FirebaseDynamicLinks.instance.onLink(
         onSuccess: (PendingDynamicLinkData dynamicLink) async {
       final Uri deepLink = dynamicLink?.link;
-      print("DEEPLINK: $dynamicLink");
-      print("DYNAMIC LINK FOUND");
+      print("WHATSUP" + deepLink.toString());
       if (deepLink != null) {
-        add(DisplayUserDataUpdatedByLink(link: deepLink.toString()));
+        add(DisplayUserDataUpdatedByLink(
+            link: deepLink.toString(), shortLink: false));
       }
     }, onError: (OnLinkErrorException e) async {
-      print('onLinkError');
       print(e.message);
     });
   }
@@ -72,10 +72,14 @@ class DisplayUserDataBloc
       DisplayUserDataUpdatedByLink event) async* {
     //parseUrl
     String username = "";
-    Uri dynamicLinkURI = Uri.parse(event.link);
-    final PendingDynamicLinkData data =
-        await FirebaseDynamicLinks.instance.getDynamicLink(dynamicLinkURI);
-    username = parseDynamicLink(data.link);
+    Uri dynamicLinkURI = Uri.parse(event?.link);
+    if (event.shortLink == true) {
+      final PendingDynamicLinkData data =
+          await FirebaseDynamicLinks.instance.getDynamicLink(dynamicLinkURI);
+      username = parseDynamicLink(data.link);
+    } else {
+      username = parseDynamicLink(dynamicLinkURI);
+    }
 
     try {
       User user;
