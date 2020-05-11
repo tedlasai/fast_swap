@@ -25,7 +25,7 @@ class DisplayUserDataBloc
     final Uri deepLink = data?.link;
     print(deepLink);
     if (deepLink != null) {
-      add(DisplayUserDataUpdatedByLink(link: deepLink.toString(), deep: true));
+      add(DisplayUserDataUpdatedByLink(link: deepLink.toString()));
     }
     FirebaseDynamicLinks.instance.onLink(
         onSuccess: (PendingDynamicLinkData dynamicLink) async {
@@ -33,8 +33,7 @@ class DisplayUserDataBloc
       print("DEEPLINK: $dynamicLink");
       print("DYNAMIC LINK FOUND");
       if (deepLink != null) {
-        add(DisplayUserDataUpdatedByLink(
-            link: deepLink.toString(), deep: true));
+        add(DisplayUserDataUpdatedByLink(link: deepLink.toString()));
       }
     }, onError: (OnLinkErrorException e) async {
       print('onLinkError');
@@ -73,13 +72,11 @@ class DisplayUserDataBloc
       DisplayUserDataUpdatedByLink event) async* {
     //parseUrl
     String username = "";
-    if (event.deep) {
-      //deep link
-      username = parseDeepLink(event.link);
-    } else {
-      //dynamic link
-      username = parseDynamicLink(event.link);
-    }
+    Uri dynamicLinkURI = Uri.parse(event.link);
+    final PendingDynamicLinkData data =
+        await FirebaseDynamicLinks.instance.getDynamicLink(dynamicLinkURI);
+    username = parseDynamicLink(data.link);
+
     try {
       User user;
 
@@ -101,10 +98,8 @@ class DisplayUserDataBloc
     }
   }
 
-  String parseDynamicLink(String dynamicLink) {
-    Uri dynamicLinkURI = Uri.parse(dynamicLink);
-    Uri LinkURI = Uri.parse(dynamicLinkURI.queryParameters["link"]);
-    return LinkURI.queryParameters["username"];
+  String parseDynamicLink(Uri dynamicLink) {
+    return dynamicLink.queryParameters["username"];
   }
 
   Stream<DisplayUserDataState> _mapDisplayUserDataClearToState() async* {
@@ -112,6 +107,9 @@ class DisplayUserDataBloc
   }
 
   String parseDeepLink(String deepLink) {
-    return Uri.parse(deepLink).queryParameters["username"];
+    Uri base = Uri.parse("https://fastswap.page.link/");
+    // print("HI BRO" + dynamicLinkURI.resolveUri(base).toString());
+
+    return base.queryParameters["username"];
   }
 }

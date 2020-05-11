@@ -85,7 +85,7 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
               child: RepaintBoundary(
                 key: globalKey,
                 child: QrImage(
-                  data: dynamicLink,
+                  data: shortLink,
                   size: 0.4 * bodyHeight,
                 ),
               ),
