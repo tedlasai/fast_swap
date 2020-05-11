@@ -105,11 +105,4 @@ class DisplayUserDataBloc
   Stream<DisplayUserDataState> _mapDisplayUserDataClearToState() async* {
     yield NoUserData();
   }
-
-  String parseDeepLink(String deepLink) {
-    Uri base = Uri.parse("https://fastswap.page.link/");
-    // print("HI BRO" + dynamicLinkURI.resolveUri(base).toString());
-
-    return base.queryParameters["username"];
-  }
 }

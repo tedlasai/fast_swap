@@ -36,6 +36,7 @@ class ScanQRCodeState extends State<ScanQRCode> {
     try {
       String barcode = await BarcodeScanner.scan();
       if (barcode != null && barcode != "") {
+        print("barcode" + barcode);
         BlocProvider.of<DisplayUserDataBloc>(context)
             .add(DisplayUserDataUpdatedByLink(link: barcode));
       } else {

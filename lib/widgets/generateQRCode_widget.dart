@@ -1,5 +1,4 @@
 import 'package:fastswap/qrcodegen_bloc/qrcodegen.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_share/flutter_share.dart';
@@ -85,6 +84,7 @@ class GenerateQRCodeState extends State<GenerateQRCode> {
               child: RepaintBoundary(
                 key: globalKey,
                 child: QrImage(
+                  errorCorrectionLevel: QrErrorCorrectLevel.H,
                   data: shortLink,
                   size: 0.4 * bodyHeight,
                 ),

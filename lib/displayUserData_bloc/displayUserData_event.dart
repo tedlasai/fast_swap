@@ -32,7 +32,7 @@ class DisplayUserDataUpdatedByLink extends DisplayUserDataEvent {
   List<Object> get props => [link];
 
   @override
-  String toString() => 'DisplayUserDataUpdatedByDynamicLink { link :$link}';
+  String toString() => 'DisplayUserDataUpdatedByLink { link :$link}';
 }
 
 class DisplayUserDataClear extends DisplayUserDataEvent {}
