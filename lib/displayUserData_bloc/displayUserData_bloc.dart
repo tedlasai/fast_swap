@@ -23,7 +23,6 @@ class DisplayUserDataBloc
     final PendingDynamicLinkData data =
         await FirebaseDynamicLinks.instance.getInitialLink();
     final Uri deepLink = data?.link;
-    print(deepLink);
     if (deepLink != null) {
       add(DisplayUserDataUpdatedByLink(
           link: deepLink.toString(), shortLink: false));
@@ -31,7 +30,6 @@ class DisplayUserDataBloc
     FirebaseDynamicLinks.instance.onLink(
         onSuccess: (PendingDynamicLinkData dynamicLink) async {
       final Uri deepLink = dynamicLink?.link;
-      print("WHATSUP" + deepLink.toString());
       if (deepLink != null) {
         add(DisplayUserDataUpdatedByLink(
             link: deepLink.toString(), shortLink: false));
@@ -73,7 +71,7 @@ class DisplayUserDataBloc
     //parseUrl
     String username = "";
     Uri dynamicLinkURI = Uri.parse(event?.link);
-    if (event.shortLink == true) {
+    if (event.shortLink) {
       final PendingDynamicLinkData data =
           await FirebaseDynamicLinks.instance.getDynamicLink(dynamicLinkURI);
       username = parseDynamicLink(data.link);
