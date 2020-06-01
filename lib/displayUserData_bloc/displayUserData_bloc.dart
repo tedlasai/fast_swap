@@ -81,14 +81,14 @@ class DisplayUserDataBloc
 
     try {
       User user;
-
+      print(username);
       QuerySnapshot usersMatchedSnapshot =
-          await _usersRepository.findUsername(username);
+          await _usersRepository.findUsername(username.toLowerCase());
 
       List<User> usersMatched = usersMatchedSnapshot.documents
           .map((doc) => User.fromEntity(UserEntity.fromSnapshot(doc)))
           .toList();
-
+      print(usersMatched);
       if (usersMatched.length > 0) {
         user = usersMatched[0];
         yield HasUserData(user);

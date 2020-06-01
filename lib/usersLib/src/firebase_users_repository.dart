@@ -54,10 +54,10 @@ class FirebaseUsersRepository implements UsersRepository {
     return userCollection.document(User.uid);
   }
 
-  Future<QuerySnapshot> findUsername(String username) async {
+  Future<QuerySnapshot> findUsername(String usernameLowercase) async {
     try {
       return userCollection
-          .where("username", isEqualTo: username)
+          .where("usernameLowercase", isEqualTo: usernameLowercase)
           .limit(1)
           .getDocuments();
     } catch (_) {
